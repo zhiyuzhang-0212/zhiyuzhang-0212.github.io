@@ -22,7 +22,7 @@
     "eyebrow": "博士在读 · 生成式 AI",
     "name": "章之禹",
     "cnName": "Zhiyu Zhang",
-    "tagline": "多模态生成与扩散模型。",
+    "tagline": "多模态生成与扩散模型",
     "affiliation": "上海创智学院 · 模思智能 · OpenMOSS",
     "location": "中国 · 上海",
     "keywords": [
@@ -365,7 +365,7 @@
   "contact": {
     "title": "联系方式",
     "kicker": "08 — 联系",
-    "text": "欢迎交流生成式音视频与语音研究、合作或机会。",
+    "text": "欢迎就生成式音视频与语音方向的研究进行交流，也欢迎洽谈合作与相关机会。",
     "email": "zy.zhang0212@gmail.com"
   },
   "footer": {

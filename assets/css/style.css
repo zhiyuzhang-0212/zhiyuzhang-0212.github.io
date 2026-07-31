@@ -210,8 +210,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .news-list { display: grid; gap: .2rem; }
 .news-item { display: grid; grid-template-columns: 108px 1fr; gap: 1.4rem; padding: 1.1rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
 .news-item:last-child { border-bottom: 0; }
-.news-item time { font-family: var(--font-mono); font-size: .82rem; color: var(--accent); }
-.news-item p { margin: 0; color: var(--text-soft); }
+.news-item time { font-family: var(--font-mono); font-size: .85rem; color: var(--accent); }
+.news-item p { margin: 0; color: var(--text-soft); font-size: 1.02rem; line-height: 1.6; }
 .news-item strong { color: var(--text); font-weight: 600; }
 
 /* Cards (publications) */
@@ -254,7 +254,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   background: linear-gradient(120deg, var(--accent), var(--accent-2));
   box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--accent) 70%, transparent);
 }
-.card__role--star { color: var(--accent); font-weight: 600; }
+.card__role--star { color: var(--accent); font-weight: 700; }
 .card__highlight { color: var(--accent); font-weight: 700; }
 .card__eq { color: var(--text-dim); font-size: .82rem; white-space: nowrap; }
 .card__authors sup { color: var(--accent); font-weight: 700; }
@@ -300,12 +300,12 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .tl-org { color: var(--text-soft); font-size: .92rem; }
 .tl-org .loc { color: var(--text-dim); }
 .tl-points { margin: .7rem 0 0; display: grid; gap: .35rem; }
-.tl-points li { position: relative; padding-left: 1.1rem; color: var(--text-soft); font-size: .92rem; }
+.tl-points li { position: relative; padding-left: 1.1rem; color: var(--text-soft); font-size: .98rem; }
 .tl-points li::before { content: "▸"; position: absolute; left: 0; color: var(--accent-2); font-size: .75rem; top: .18rem; }
 .tl-points li.is-next { color: var(--accent); font-weight: 600; }
 .tl-points li.is-next::before { content: "◆"; color: var(--accent); font-size: .68rem; top: .22rem; }
 .tl-subpoints { margin: .35rem 0 0; padding: 0; display: grid; gap: .28rem; list-style: none; }
-.tl-subpoints li { padding-left: 1rem; color: var(--text-dim); font-size: .86rem; }
+.tl-subpoints li { padding-left: 1rem; color: var(--text-dim); font-size: .92rem; }
 .tl-subpoints li::before { content: "–"; color: var(--text-dim); font-size: .8rem; top: .02rem; }
 .tl-detail { color: var(--text-soft); font-size: .92rem; margin: .3rem 0 0; }
 
