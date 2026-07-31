@@ -5,7 +5,7 @@
     "about": "About",
     "news": "News",
     "techreport": "Technical Report",
-    "publications": "Publications",
+    "publications": "Papers",
     "experience": "Experience",
     "education": "Education",
     "honors": "Honors",
@@ -58,7 +58,7 @@
       },
       {
         "date": "2026.02",
-        "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1k★ on GitHub</strong>, <strong>~100k monthly downloads on Hugging Face</strong>). I am a core contributor."
+        "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1k★ on GitHub</strong>, <strong>~100k monthly downloads on Hugging Face</strong>)."
       },
       {
         "date": "2026.01",
@@ -142,7 +142,7 @@
     ]
   },
   "publications": {
-    "title": "Publications",
+    "title": "Papers",
     "kicker": "04 — Selected work",
     "note": "Author names in <strong>bold</strong> denote me; <span class=\"eq-mark\">∗</span> marks equal contribution.",
     "items": [
@@ -318,7 +318,7 @@
   },
   "education": {
     "title": "Education",
-    "kicker": "06 — Academic path",
+    "kicker": "07 — Academic path",
     "items": [
       {
         "date": "2026.03 — Present",
@@ -342,7 +342,7 @@
   },
   "honors": {
     "title": "Honors & Awards",
-    "kicker": "07 — Recognition",
+    "kicker": "06 — Recognition",
     "items": [
       {
         "year": "2024",

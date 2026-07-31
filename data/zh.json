@@ -45,7 +45,7 @@
     "paragraphs": [
       "本科毕业于<strong>电子科技大学</strong><strong>信息与通信工程</strong>专业，获荣誉学士学位，并获评优秀毕业生。",
       "随后在<strong>东南大学</strong><strong>硕博连读</strong>。硕士阶段的研究方向为<strong>语音生成、语音恢复与神经声码器</strong>，期间还先后在<strong>腾讯 AI Lab</strong>（语音语言技术中心）与<strong>阿里云通义实验室</strong>担任研究实习生。",
-      "目前已进入博士在读阶段，同时在<a href=\"https://www.sii.edu.cn/\" target=\"_blank\" rel=\"noopener\">上海创智学院</a>、<a href=\"https://mosi.cn/\" target=\"_blank\" rel=\"noopener\">模思智能</a>、<a href=\"https://openmoss.ai/\" target=\"_blank\" rel=\"noopener\">OpenMOSS</a> 三个团队开展研究，导师为<a href=\"https://scholar.google.com/citations?user=Pq4Yp_kAAAAJ\" target=\"_blank\" rel=\"noopener\">邱锡鹏</a>教授。目前的研究方向与兴趣为<strong>音视频生成 · 语音生成 · 扩散模型</strong>。"
+      "目前博士在读，同时在<a href=\"https://www.sii.edu.cn/\" target=\"_blank\" rel=\"noopener\">上海创智学院</a>、<a href=\"https://mosi.cn/\" target=\"_blank\" rel=\"noopener\">模思智能</a>、<a href=\"https://openmoss.ai/\" target=\"_blank\" rel=\"noopener\">OpenMOSS</a> 三个团队开展研究，导师为<a href=\"https://scholar.google.com/citations?user=Pq4Yp_kAAAAJ\" target=\"_blank\" rel=\"noopener\">邱锡鹏</a>教授。目前的研究方向与兴趣为<strong>音视频生成 · 语音生成 · 扩散模型</strong>。"
     ]
   },
   "news": {
@@ -58,7 +58,7 @@
       },
       {
         "date": "2026.02",
-        "content": "<strong>MOVA</strong> 发布——国内最早的开源音视频生成模型（<strong>GitHub 约 1k★</strong>，<strong>Hugging Face 单月下载量约 10 万</strong>）。本人为核心贡献者。"
+        "content": "<strong>MOVA</strong> 发布——国内最早的开源音视频生成模型（<strong>GitHub 约 1k★</strong>，<strong>Hugging Face 单月下载量约 10 万</strong>）。"
       },
       {
         "date": "2026.01",
@@ -318,7 +318,7 @@
   },
   "education": {
     "title": "教育背景",
-    "kicker": "06 — 求学历程",
+    "kicker": "07 — 求学历程",
     "items": [
       {
         "date": "2026.03 — 至今",
@@ -342,7 +342,7 @@
   },
   "honors": {
     "title": "荣誉奖励",
-    "kicker": "07 — 荣誉",
+    "kicker": "06 — 荣誉",
     "items": [
       {
         "year": "2024",
