@@ -40,7 +40,7 @@
     }
   },
   "about": {
-    "title": "About",
+    "title": "About Me",
     "kicker": "01 — Profile",
     "paragraphs": [
       "I received my <strong>B.Eng. in Information &amp; Communication Engineering</strong> from the <strong>University of Electronic Science and Technology of China</strong> (UESTC), graduating as an honors bachelor and an outstanding graduate.",
@@ -55,10 +55,6 @@
       {
         "date": "Coming soon",
         "content": "New multimodal generation work in progress — stay tuned."
-      },
-      {
-        "date": "2026.03",
-        "content": "Entered the doctoral stage of my studies at the <strong>Shanghai Innovation Institute</strong> and <strong>Southeast University</strong>."
       },
       {
         "date": "2026.02",
