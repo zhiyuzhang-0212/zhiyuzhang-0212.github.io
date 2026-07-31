@@ -1,0 +1,378 @@
+{
+  "docTitle": "章之禹 · 个人主页",
+  "nav": {
+    "brand": "章之禹",
+    "about": "关于",
+    "news": "动态",
+    "techreport": "技术报告",
+    "publications": "论文发表",
+    "experience": "经历",
+    "education": "教育背景",
+    "honors": "荣誉奖励",
+    "contact": "联系方式"
+  },
+  "ui": {
+    "themeToLight": "切换浅色",
+    "themeToDark": "切换深色",
+    "langLabel": "EN",
+    "menu": "菜单",
+    "backToTop": "顶部"
+  },
+  "hero": {
+    "eyebrow": "博士在读 · 生成式 AI",
+    "name": "章之禹",
+    "cnName": "Zhiyu Zhang",
+    "tagline": "多模态生成与扩散模型。",
+    "affiliation": "上海创智学院 · 模思智能 · OpenMOSS",
+    "location": "中国 · 上海",
+    "keywords": [
+      "音视频生成",
+      "语音合成",
+      "扩散模型"
+    ],
+    "ctaPrimary": {
+      "label": "查看论文",
+      "target": "techreport"
+    },
+    "ctaSecondary": {
+      "label": "联系我",
+      "target": "contact"
+    }
+  },
+  "about": {
+    "title": "关于我",
+    "kicker": "01 — 简介",
+    "paragraphs": [
+      "本科毕业于<strong>电子科技大学</strong><strong>信息与通信工程</strong>专业，获荣誉学士学位，并获评优秀毕业生。",
+      "随后在<strong>东南大学</strong><strong>硕博连读</strong>。硕士阶段的研究方向为<strong>语音生成、语音恢复与神经声码器</strong>，期间还先后在<strong>腾讯 AI Lab</strong>（语音语言技术中心）与<strong>阿里云通义实验室</strong>担任研究实习生。",
+      "目前已进入博士在读阶段，同时在<a href=\"https://www.sii.edu.cn/\" target=\"_blank\" rel=\"noopener\">上海创智学院</a>、<a href=\"https://mosi.cn/\" target=\"_blank\" rel=\"noopener\">模思智能</a>、<a href=\"https://openmoss.ai/\" target=\"_blank\" rel=\"noopener\">OpenMOSS</a> 三个团队开展研究，导师为<a href=\"https://scholar.google.com/citations?user=Pq4Yp_kAAAAJ\" target=\"_blank\" rel=\"noopener\">邱锡鹏</a>教授。目前的研究方向与兴趣为<strong>音视频生成 · 语音生成 · 扩散模型</strong>。"
+    ]
+  },
+  "news": {
+    "title": "动态",
+    "kicker": "02 — 近期",
+    "items": [
+      {
+        "date": "敬请期待",
+        "content": "新的多模态生成工作正在进行中，敬请期待。"
+      },
+      {
+        "date": "2026.03",
+        "content": "进入博士阶段，在<strong>上海创智学院</strong>与<strong>东南大学</strong>开展研究。"
+      },
+      {
+        "date": "2026.02",
+        "content": "<strong>MOVA</strong> 发布——国内最早的开源音视频生成模型（<strong>GitHub 约 1k★</strong>，<strong>Hugging Face 单月下载量约 10 万</strong>）。本人为核心贡献者。"
+      },
+      {
+        "date": "2026.01",
+        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>。"
+      },
+      {
+        "date": "2026.01",
+        "content": "基于薛定谔桥的骨导语音恢复工作发表于 <strong>Speech Communication</strong>（JCR Q1）。"
+      },
+      {
+        "date": "2025.08",
+        "content": "<strong>BridgeVoC</strong> 发表于 <strong>IJCAI 2025</strong>——首个基于薛定谔桥的时频域神经声码器。"
+      },
+      {
+        "date": "2025.06",
+        "content": "<strong>SMRU-Lite</strong> 发表于 <strong>IJCNN 2025</strong>。"
+      }
+    ]
+  },
+  "techReport": {
+    "title": "技术报告",
+    "kicker": "03 — 旗舰工作",
+    "note": "目前在 OpenMOSS 的核心工作。",
+    "items": [
+      {
+        "title": "MOVA: Towards Scalable and Synchronized Video-Audio Generation",
+        "image": "./assets/img/pub/mova.png",
+        "authors": "SII-OpenMOSS Team",
+        "venue": "技术报告 · OpenMOSS",
+        "year": "2026",
+        "highlight": "核心贡献者",
+        "description": "MOVA 是一个面向可扩展、同步音视频生成的双塔扩散模型。视频塔采用高噪/低噪混合专家（MoE）架构，与独立的音频塔通过 bridge cross-attention 相耦合，支持 360p 与 720p 下的图生音视频（IT2VA，并涌现出一定的文生音视频 T2VA 能力）。作为最早的开源音视频生成模型之一，它可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。",
+        "tags": [
+          "音视频",
+          "扩散模型",
+          "开源"
+        ],
+        "links": [
+          {
+            "label": "论文",
+            "icon": "paper",
+            "url": "https://arxiv.org/abs/2602.08794"
+          },
+          {
+            "label": "代码",
+            "icon": "github",
+            "url": "https://github.com/OpenMOSS/MOVA"
+          },
+          {
+            "label": "博客",
+            "icon": "demo",
+            "url": "https://mosi.cn/models/mova"
+          },
+          {
+            "label": "模型 360p",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOVA-360p"
+          },
+          {
+            "label": "模型 720p",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOVA-720p"
+          },
+          {
+            "label": "评测集",
+            "icon": "hf",
+            "url": "https://huggingface.co/datasets/zhiyuzhang-0212/MOVA_benchmark_for_arena"
+          },
+          {
+            "label": "微信",
+            "icon": "wechat",
+            "url": "https://mp.weixin.qq.com/s/ZP1-Sv1ygvvXCX97ohUYDw"
+          },
+          {
+            "label": "HF 论文",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2602.08794"
+          }
+        ]
+      }
+    ]
+  },
+  "publications": {
+    "title": "论文发表",
+    "kicker": "04 — 代表工作",
+    "note": "<strong>加粗</strong>作者为本人；<span class=\"eq-mark\">∗</span> 表示共同一作。",
+    "items": [
+      {
+        "title": "MELA-TTS: Joint Transformer-diffusion Model with Representation Alignment for Speech Synthesis",
+        "image": "./assets/img/pub/mela.png",
+        "authors": "Keyu An<sup>∗</sup>, Zhiyu Zhang<sup>∗</sup>, Changfeng Gao, Yabin Li, Zhendong Peng, Haoxu Wang, Zhihao Du, Han Zhao, Zhifu Gao, Xiangang Li",
+        "authorsNote": "∗ 共同一作",
+        "venue": "ICASSP 2026",
+        "year": "2026",
+        "role": "共同第一作者",
+        "description": "MELA-TTS 是一个直接作用于连续语音特征的端到端 TTS 模型，避免了离散化 token 带来的信息损失。通过将语言模型的隐层表征与 ASR 编码器表征对齐，缓解端到端优化困难、加速收敛并增强模态间语义一致性。模型在 CER 上达到 SOTA，同时支持流式生成。",
+        "tags": [
+          "语音合成",
+          "扩散模型",
+          "语音"
+        ],
+        "links": [
+          {
+            "label": "论文",
+            "icon": "paper",
+            "url": "https://doi.org/10.1109/ICASSP55912.2026.11461891"
+          },
+          {
+            "label": "arXiv",
+            "icon": "arxiv",
+            "url": "https://arxiv.org/abs/2509.14784"
+          },
+          {
+            "label": "HF 论文",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2509.14784"
+          }
+        ]
+      },
+      {
+        "title": "A Schrödinger Bridge-based Two-stage Model for Bone-conducted Speech Restoration",
+        "image": "./assets/img/pub/schrodinger.png",
+        "authors": "Zhiyu Zhang, Tong Lei, Feiran Yang, Junfeng Li, Chunguo Li",
+        "venue": "Speech Communication · Vol. 183, 103455",
+        "year": "2026",
+        "description": "针对骨导语音在不同频段退化特征不同的特点，提出“增强–恢复”两阶段框架。第一阶段以判别式模型去噪并增强衰减的低频成分，第二阶段以基于薛定谔桥的生成式模型恢复缺失的高频细节。该设计在大幅减少扩散推理步数的同时，于语音质量与自然度上均达到 SOTA。",
+        "tags": [
+          "JCR Q1",
+          "语音恢复",
+          "扩散模型"
+        ],
+        "links": [
+          {
+            "label": "论文",
+            "icon": "paper",
+            "url": "https://doi.org/10.1016/j.specom.2026.103455"
+          }
+        ]
+      },
+      {
+        "title": "BridgeVoC: Neural Vocoder with Schrödinger Bridge",
+        "image": "./assets/img/pub/bridgevoc.png",
+        "authors": "Tong Lei, Zhiyu Zhang, Rilin Chen, Meng Yu, Jing Lu, Chengshi Zheng, Dong Yu, Andong Li",
+        "venue": "IJCAI 2025 · pp. 8122–8130",
+        "year": "2025",
+        "description": "BridgeVoC 是首个基于薛定谔桥的时频域声码器，从信号恢复的角度重新定义声码任务，提出 data-to-data 的声码新范式。通过将依赖数据的先验分布桥接到目标分布，仅需极少的采样步数即可生成高保真音频。其性能超越 BigVGAN 等强基线，达到 SOTA。",
+        "tags": [
+          "声码器",
+          "扩散模型",
+          "语音"
+        ],
+        "links": [
+          {
+            "label": "论文",
+            "icon": "paper",
+            "url": "https://doi.org/10.24963/ijcai.2025/903"
+          },
+          {
+            "label": "代码",
+            "icon": "github",
+            "url": "https://github.com/tencent-ailab/BridgeVocoder"
+          }
+        ]
+      },
+      {
+        "title": "SMRU-Lite: Efficient Low-Complexity Speech Enhancement Model with Uncertainty Estimation",
+        "image": "./assets/img/pub/smru.png",
+        "authors": "Zhiyu Zhang, Tong Lei, Zhihang Sun, Feiran Yang, Rilin Chen, Chunguo Li",
+        "venue": "IJCNN 2025",
+        "year": "2025",
+        "description": "SMRU-Lite 是一个带有不确定性估计的轻量级语音增强模型。通过频带压缩与 skip-RNN 设计，在性能几乎无损的前提下将原 SMRU 模型的计算量近乎减半。模型对未知声学场景保持了很强的泛化能力，非常适合资源受限的部署场景。",
+        "tags": [
+          "语音增强",
+          "高效"
+        ],
+        "links": [
+          {
+            "label": "论文",
+            "icon": "paper",
+            "url": "https://doi.org/10.1109/IJCNN64981.2025.11228906"
+          }
+        ]
+      }
+    ]
+  },
+  "experience": {
+    "title": "经历",
+    "kicker": "05 — 工作与实习",
+    "items": [
+      {
+        "date": "2025.11 — 至今",
+        "role": "研究实习生",
+        "org": "模思智能 · OpenMOSS · 上海创智学院",
+        "location": "上海",
+        "points": [
+          {
+            "text": "新的多模态生成工作，敬请期待。",
+            "next": true
+          },
+          {
+            "text": "MOVA（可扩展音视频同步生成模型）核心贡献者。",
+            "sub": [
+              "双塔架构：视频塔采用高噪/低噪混合专家（MoE）结构，与独立的音频塔通过 bridge cross-attention 耦合，音频与视频同步生成而非后期拼接。",
+              "支持 360p 与 720p 下的图生音视频（IT2VA），并涌现出一定的文生音视频（T2VA）能力。",
+              "作为最早的开源音视频生成模型之一，可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。"
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2025.07 — 2025.10",
+        "role": "研究实习生",
+        "org": "阿里云 · 通义实验室",
+        "location": "杭州",
+        "points": [
+          {
+            "text": "MELA-TTS（ICASSP 2026）共同第一作者，基于连续语音特征的 transformer–diffusion 联合建模 TTS 模型。",
+            "sub": [
+              "设计模型直接生成连续声学特征，去掉离散语音 tokenizer，规避其带来的信息损失。",
+              "提出表征对齐目标，将语言模型隐层状态与 ASR 编码器表征对齐——稳定端到端优化、加速收敛，并增强文本与语音之间的语义一致性。",
+              "在同类系统中取得 SOTA 的字错误率（CER），同时保持流式生成能力。",
+              "负责论文中的大规模训练与消融实验，以及客观与主观评测。"
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2024.07 — 2024.08",
+        "role": "研究实习生",
+        "org": "腾讯 AI Lab · 语音语言技术中心",
+        "location": "北京",
+        "points": [
+          {
+            "text": "SMRU-Lite（IJCNN 2025）第一作者，带不确定性估计的高效低复杂度语音增强模型。",
+            "sub": [
+              "通过频带压缩与 skip-RNN 递归结构，将原 SMRU 模型的计算量近乎减半，性能损失几可忽略。",
+              "引入不确定性估计分支，并验证模型在未见声学场景下依然稳健——这正是端侧部署最关键的一点。"
+            ]
+          },
+          {
+            "text": "BridgeVoC（IJCAI 2025），首个基于薛定谔桥的时频域神经声码器。",
+            "sub": [
+              "将声码任务重新表述为信号恢复问题：以依赖数据的先验分布桥接目标分布，而非从高斯噪声出发。",
+              "实验验证仅需极少采样步数即可合成高保真音频，性能超越 BigVGAN 等强基线。"
+            ]
+          },
+          {
+            "text": "同期探索 video-to-audio 生成方向。",
+            "sub": [
+              "复现 Audio-Flamingo、HTSAT、PANNs、Qwen 作为候选音频 / 语义编码器。",
+              "构建多进程数据处理 pipeline，大规模筛选音画对齐的样本对，显著提升下游 video-to-audio 效果。"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "教育背景",
+    "kicker": "06 — 求学历程",
+    "items": [
+      {
+        "date": "2026.03 — 至今",
+        "degree": "博士研究生 · 硕博连读",
+        "school": "上海创智学院 · 东南大学",
+        "detail": "多模态生成与扩散模型。"
+      },
+      {
+        "date": "2024.09 — 2026.03",
+        "degree": "硕士阶段 · 信息与通信工程",
+        "school": "东南大学",
+        "detail": "硕博连读。研究方向：语音生成、语音恢复、神经声码器。"
+      },
+      {
+        "date": "2020.09 — 2024.06",
+        "degree": "学士 · 信息与通信工程",
+        "school": "电子科技大学",
+        "detail": "荣誉学士 · 优秀毕业生。"
+      }
+    ]
+  },
+  "honors": {
+    "title": "荣誉奖励",
+    "kicker": "07 — 荣誉",
+    "items": [
+      {
+        "year": "2024",
+        "title": "电子科技大学 荣誉学士 · 优秀毕业生"
+      },
+      {
+        "year": "2022",
+        "title": "TI 杯全国大学生电子设计竞赛 — 省级一等奖"
+      },
+      {
+        "year": "2021",
+        "title": "科研英语演讲大赛 本科生项目报告组 — 全国一等奖"
+      },
+      {
+        "year": "2021–22",
+        "title": "其他省级竞赛奖项 — 华为杯四川省嵌入式设计竞赛、蓝桥杯嵌入式设计与开发竞赛等"
+      }
+    ]
+  },
+  "contact": {
+    "title": "联系方式",
+    "kicker": "08 — 联系",
+    "text": "欢迎交流生成式音视频与语音研究、合作或机会。",
+    "email": "zy.zhang0212@gmail.com"
+  },
+  "footer": {
+    "copyright": "© 2026 章之禹。"
+  }
+}

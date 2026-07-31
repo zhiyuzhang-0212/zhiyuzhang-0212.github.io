@@ -1,0 +1,378 @@
+{
+  "docTitle": "Zhiyu Zhang · Homepage",
+  "nav": {
+    "brand": "Zhiyu Zhang",
+    "about": "About",
+    "news": "News",
+    "techreport": "Technical Report",
+    "publications": "Publications",
+    "experience": "Experience",
+    "education": "Education",
+    "honors": "Honors",
+    "contact": "Contact"
+  },
+  "ui": {
+    "themeToLight": "Switch to light",
+    "themeToDark": "Switch to dark",
+    "langLabel": "中文",
+    "menu": "Menu",
+    "backToTop": "Top"
+  },
+  "hero": {
+    "eyebrow": "PhD Student · Generative AI",
+    "name": "Zhiyu Zhang",
+    "cnName": "章之禹",
+    "tagline": "Multimodal generation & diffusion models.",
+    "affiliation": "Shanghai Innovation Institute · MOSI · OpenMOSS",
+    "location": "Shanghai, China",
+    "keywords": [
+      "Video-Audio Generation",
+      "Speech Synthesis",
+      "Diffusion Models"
+    ],
+    "ctaPrimary": {
+      "label": "View publications",
+      "target": "techreport"
+    },
+    "ctaSecondary": {
+      "label": "Get in touch",
+      "target": "contact"
+    }
+  },
+  "about": {
+    "title": "About",
+    "kicker": "01 — Profile",
+    "paragraphs": [
+      "I received my <strong>B.Eng. in Information &amp; Communication Engineering</strong> from the <strong>University of Electronic Science and Technology of China</strong> (UESTC), graduating as an honors bachelor and an outstanding graduate.",
+      "I then continued at <strong>Southeast University</strong> in the <strong>direct M.Eng.–Ph.D. program</strong>. During the master's stage my research covered <strong>speech generation, speech restoration and neural vocoding</strong>. I was also a research intern at <strong>Tencent AI Lab</strong> (Speech &amp; Language) and <strong>Alibaba Cloud Tongyi Lab</strong>.",
+      "I am now a Ph.D. student, carrying out research across three teams — the <a href=\"https://www.sii.edu.cn/\" target=\"_blank\" rel=\"noopener\">Shanghai Innovation Institute</a>, <a href=\"https://mosi.cn/\" target=\"_blank\" rel=\"noopener\">MOSI</a> and <a href=\"https://openmoss.ai/\" target=\"_blank\" rel=\"noopener\">OpenMOSS</a> — supervised by <strong>Prof. <a href=\"https://scholar.google.com/citations?user=Pq4Yp_kAAAAJ\" target=\"_blank\" rel=\"noopener\">Xipeng Qiu</a></strong>. My current research interests are <strong>video-audio generation · speech generation · diffusion models</strong>."
+    ]
+  },
+  "news": {
+    "title": "News",
+    "kicker": "02 — Recent",
+    "items": [
+      {
+        "date": "Coming soon",
+        "content": "New multimodal generation work in progress — stay tuned."
+      },
+      {
+        "date": "2026.03",
+        "content": "Entered the doctoral stage of my studies at the <strong>Shanghai Innovation Institute</strong> and <strong>Southeast University</strong>."
+      },
+      {
+        "date": "2026.02",
+        "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1k★ on GitHub</strong>, <strong>~100k monthly downloads on Hugging Face</strong>). I am a core contributor."
+      },
+      {
+        "date": "2026.01",
+        "content": "<strong>MELA-TTS</strong> published at <strong>ICASSP 2026</strong>."
+      },
+      {
+        "date": "2026.01",
+        "content": "Our Schrödinger-bridge model for bone-conducted speech restoration published in <strong>Speech Communication</strong> (JCR Q1)."
+      },
+      {
+        "date": "2025.08",
+        "content": "<strong>BridgeVoC</strong> published at <strong>IJCAI 2025</strong> — the first Schrödinger-bridge time–frequency neural vocoder."
+      },
+      {
+        "date": "2025.06",
+        "content": "<strong>SMRU-Lite</strong> published at <strong>IJCNN 2025</strong>."
+      }
+    ]
+  },
+  "techReport": {
+    "title": "Technical Report",
+    "kicker": "03 — Flagship",
+    "note": "My current focus at OpenMOSS.",
+    "items": [
+      {
+        "title": "MOVA: Towards Scalable and Synchronized Video-Audio Generation",
+        "image": "./assets/img/pub/mova.png",
+        "authors": "SII-OpenMOSS Team",
+        "venue": "Technical Report · OpenMOSS",
+        "year": "2026",
+        "highlight": "Core contributor",
+        "description": "MOVA is a dual-tower diffusion model for scalable, synchronized video–audio generation. A video tower with a high-/low-noise mixture-of-experts design and a dedicated audio tower are coupled through bridge cross-attention, enabling image-to-video-audio (and emergent text-to-video-audio) synthesis at 360p and 720p. As one of the first open-source video–audio generation models, it delivers high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality.",
+        "tags": [
+          "Video-Audio",
+          "Diffusion",
+          "Open-source"
+        ],
+        "links": [
+          {
+            "label": "Paper",
+            "icon": "paper",
+            "url": "https://arxiv.org/abs/2602.08794"
+          },
+          {
+            "label": "Code",
+            "icon": "github",
+            "url": "https://github.com/OpenMOSS/MOVA"
+          },
+          {
+            "label": "Blog",
+            "icon": "demo",
+            "url": "https://mosi.cn/models/mova"
+          },
+          {
+            "label": "Model 360p",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOVA-360p"
+          },
+          {
+            "label": "Model 720p",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOVA-720p"
+          },
+          {
+            "label": "Benchmark",
+            "icon": "hf",
+            "url": "https://huggingface.co/datasets/zhiyuzhang-0212/MOVA_benchmark_for_arena"
+          },
+          {
+            "label": "WeChat",
+            "icon": "wechat",
+            "url": "https://mp.weixin.qq.com/s/ZP1-Sv1ygvvXCX97ohUYDw"
+          },
+          {
+            "label": "HF Paper",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2602.08794"
+          }
+        ]
+      }
+    ]
+  },
+  "publications": {
+    "title": "Publications",
+    "kicker": "04 — Selected work",
+    "note": "Author names in <strong>bold</strong> denote me; <span class=\"eq-mark\">∗</span> marks equal contribution.",
+    "items": [
+      {
+        "title": "MELA-TTS: Joint Transformer-diffusion Model with Representation Alignment for Speech Synthesis",
+        "image": "./assets/img/pub/mela.png",
+        "authors": "Keyu An<sup>∗</sup>, Zhiyu Zhang<sup>∗</sup>, Changfeng Gao, Yabin Li, Zhendong Peng, Haoxu Wang, Zhihao Du, Han Zhao, Zhifu Gao, Xiangang Li",
+        "authorsNote": "∗ Equal contribution",
+        "venue": "ICASSP 2026",
+        "year": "2026",
+        "role": "Co-first author",
+        "description": "MELA-TTS is an end-to-end text-to-speech model that operates directly on continuous speech features, avoiding the information loss of discrete tokenization. By aligning the hidden representations of the language model with an ASR encoder, it eases optimization, accelerates convergence, and strengthens cross-modal semantic consistency. The model reaches state-of-the-art character error rate while supporting streaming generation.",
+        "tags": [
+          "TTS",
+          "Diffusion",
+          "Speech"
+        ],
+        "links": [
+          {
+            "label": "Paper",
+            "icon": "paper",
+            "url": "https://doi.org/10.1109/ICASSP55912.2026.11461891"
+          },
+          {
+            "label": "arXiv",
+            "icon": "arxiv",
+            "url": "https://arxiv.org/abs/2509.14784"
+          },
+          {
+            "label": "HF Paper",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2509.14784"
+          }
+        ]
+      },
+      {
+        "title": "A Schrödinger Bridge-based Two-stage Model for Bone-conducted Speech Restoration",
+        "image": "./assets/img/pub/schrodinger.png",
+        "authors": "Zhiyu Zhang, Tong Lei, Feiran Yang, Junfeng Li, Chunguo Li",
+        "venue": "Speech Communication · Vol. 183, 103455",
+        "year": "2026",
+        "description": "This work introduces an \"enhance–restore\" two-stage framework tailored to the frequency-dependent degradation of bone-conducted speech. A discriminative first stage denoises the signal and boosts attenuated low-frequency content, while a Schrödinger-bridge generative second stage reconstructs the missing high-frequency detail. The design attains state-of-the-art quality and naturalness while sharply reducing the number of diffusion inference steps.",
+        "tags": [
+          "JCR Q1",
+          "Speech Restoration",
+          "Diffusion"
+        ],
+        "links": [
+          {
+            "label": "Paper",
+            "icon": "paper",
+            "url": "https://doi.org/10.1016/j.specom.2026.103455"
+          }
+        ]
+      },
+      {
+        "title": "BridgeVoC: Neural Vocoder with Schrödinger Bridge",
+        "image": "./assets/img/pub/bridgevoc.png",
+        "authors": "Tong Lei, Zhiyu Zhang, Rilin Chen, Meng Yu, Jing Lu, Chengshi Zheng, Dong Yu, Andong Li",
+        "venue": "IJCAI 2025 · pp. 8122–8130",
+        "year": "2025",
+        "description": "BridgeVoC is the first time–frequency-domain neural vocoder built on a Schrödinger bridge, recasting waveform generation as a signal-restoration problem under a data-to-data paradigm. By bridging a data-dependent prior to the target distribution, it produces high-fidelity audio in very few sampling steps. It surpasses strong baselines such as BigVGAN to achieve state-of-the-art vocoding quality.",
+        "tags": [
+          "Vocoder",
+          "Diffusion",
+          "Speech"
+        ],
+        "links": [
+          {
+            "label": "Paper",
+            "icon": "paper",
+            "url": "https://doi.org/10.24963/ijcai.2025/903"
+          },
+          {
+            "label": "Code",
+            "icon": "github",
+            "url": "https://github.com/tencent-ailab/BridgeVocoder"
+          }
+        ]
+      },
+      {
+        "title": "SMRU-Lite: Efficient Low-Complexity Speech Enhancement Model with Uncertainty Estimation",
+        "image": "./assets/img/pub/smru.png",
+        "authors": "Zhiyu Zhang, Tong Lei, Zhihang Sun, Feiran Yang, Rilin Chen, Chunguo Li",
+        "venue": "IJCNN 2025",
+        "year": "2025",
+        "description": "SMRU-Lite is a lightweight speech-enhancement model with built-in uncertainty estimation. Through band compression and a skip-RNN design, it nearly halves the computational cost of the original SMRU model with minimal performance degradation. It retains strong generalization to unseen acoustic conditions, making it well suited to resource-constrained deployment.",
+        "tags": [
+          "Speech Enhancement",
+          "Efficient"
+        ],
+        "links": [
+          {
+            "label": "Paper",
+            "icon": "paper",
+            "url": "https://doi.org/10.1109/IJCNN64981.2025.11228906"
+          }
+        ]
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experience",
+    "kicker": "05 — Where I've worked",
+    "items": [
+      {
+        "date": "2025.11 — Present",
+        "role": "Research Intern",
+        "org": "MOSI · OpenMOSS · Shanghai Innovation Institute",
+        "location": "Shanghai",
+        "points": [
+          {
+            "text": "New multimodal generation work — coming soon.",
+            "next": true
+          },
+          {
+            "text": "Core contributor to MOVA, a scalable synchronized video-audio generation model.",
+            "sub": [
+              "Dual-tower design: a video tower with a high-/low-noise mixture-of-experts architecture coupled to a dedicated audio tower through bridge cross-attention, so video and audio are generated in sync rather than stitched together.",
+              "Supports image-to-video-audio (IT2VA) generation at 360p and 720p, with emergent text-to-video-audio (T2VA) capability.",
+              "One of the earliest open-source video-audio generation models — high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality."
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2025.07 — 2025.10",
+        "role": "Research Intern",
+        "org": "Alibaba Cloud · Tongyi Lab",
+        "location": "Hangzhou",
+        "points": [
+          {
+            "text": "Co-first author of MELA-TTS (ICASSP 2026), a joint transformer–diffusion TTS model built on continuous speech features.",
+            "sub": [
+              "Designed the architecture to generate continuous acoustic features directly, removing the discrete speech tokenizer and the information loss it introduces.",
+              "Proposed a representation-alignment objective tying the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
+              "Reached state-of-the-art character error rate among comparable systems while keeping the model streaming-capable.",
+              "Ran the large-scale training and ablation studies, and the objective/subjective evaluation used in the paper."
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2024.07 — 2024.08",
+        "role": "Research Intern",
+        "org": "Tencent AI Lab · Speech & Language",
+        "location": "Beijing",
+        "points": [
+          {
+            "text": "First author of SMRU-Lite (IJCNN 2025), an efficient low-complexity speech-enhancement model with uncertainty estimation.",
+            "sub": [
+              "Cut the computation of the original SMRU model roughly in half through band compression and a skip-RNN recurrence, with near-negligible quality loss.",
+              "Added an uncertainty-estimation head, and verified the model holds up on unseen acoustic conditions — the case that matters for on-device deployment."
+            ]
+          },
+          {
+            "text": "BridgeVoC (IJCAI 2025), the first Schrödinger-bridge neural vocoder in the time–frequency domain.",
+            "sub": [
+              "Recast vocoding as a signal-restoration problem, bridging a data-dependent prior to the target distribution instead of starting from Gaussian noise.",
+              "Ran the experiments showing high-fidelity synthesis in very few sampling steps, beating strong baselines such as BigVGAN."
+            ]
+          },
+          {
+            "text": "Explored video-to-audio generation as a side track.",
+            "sub": [
+              "Reproduced Audio-Flamingo, HTSAT, PANNs and Qwen as candidate audio/semantic encoders.",
+              "Built a multi-process data pipeline that filters audio-visually aligned pairs at scale, measurably improving downstream video-to-audio quality."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "education": {
+    "title": "Education",
+    "kicker": "06 — Academic path",
+    "items": [
+      {
+        "date": "2026.03 — Present",
+        "degree": "Ph.D. Student · Direct M.Eng.–Ph.D. Track",
+        "school": "Shanghai Innovation Institute · Southeast University",
+        "detail": "Multimodal generation and diffusion models."
+      },
+      {
+        "date": "2024.09 — 2026.03",
+        "degree": "M.Eng. Stage, Information & Communication Engineering",
+        "school": "Southeast University",
+        "detail": "Direct M.Eng.–Ph.D. program. Research on speech generation, speech restoration and neural vocoding."
+      },
+      {
+        "date": "2020.09 — 2024.06",
+        "degree": "B.Eng., Information & Communication Engineering",
+        "school": "University of Electronic Science and Technology of China",
+        "detail": "Honors Bachelor · Outstanding Graduate."
+      }
+    ]
+  },
+  "honors": {
+    "title": "Honors & Awards",
+    "kicker": "07 — Recognition",
+    "items": [
+      {
+        "year": "2024",
+        "title": "UESTC Honors Bachelor · Outstanding Graduate"
+      },
+      {
+        "year": "2022",
+        "title": "TI Cup National Undergraduate Electronic Design Contest — Provincial First Prize"
+      },
+      {
+        "year": "2021",
+        "title": "National First Prize — Research English Speech Contest (Undergraduate Project Report)"
+      },
+      {
+        "year": "2021–22",
+        "title": "Other provincial competition awards — Huawei Cup Sichuan Embedded Design Contest, Lanqiao Cup Embedded Design &amp; Development, etc."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in touch",
+    "kicker": "08 — Contact",
+    "text": "I'm always happy to discuss generative audio-visual and speech research, collaborations, or opportunities.",
+    "email": "zy.zhang0212@gmail.com"
+  },
+  "footer": {
+    "copyright": "© 2026 Zhiyu Zhang."
+  }
+}

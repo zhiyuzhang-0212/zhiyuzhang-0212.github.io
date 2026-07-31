@@ -1,0 +1,44 @@
+{
+  "defaultLanguage": "en",
+  "self": [
+    "Zhiyu Zhang",
+    "章之禹",
+    "Z. Zhang"
+  ],
+  "avatar": "./assets/img/portrait.png",
+  "email": "zy.zhang0212@gmail.com",
+  "accent": "#7c8cff",
+  "accent2": "#4dd6c1",
+  "sections": [
+    "about",
+    "news",
+    "techreport",
+    "publications",
+    "experience",
+    "education",
+    "honors",
+    "contact"
+  ],
+  "socials": [
+    {
+      "label": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/zhiyuzhang-0212"
+    },
+    {
+      "label": "Hugging Face",
+      "icon": "hf",
+      "url": "https://huggingface.co/zhiyuzhang-0212"
+    },
+    {
+      "label": "Google Scholar",
+      "icon": "scholar",
+      "url": "https://scholar.google.com/citations?user=OOfnSXoAAAAJ&hl=en"
+    },
+    {
+      "label": "Email",
+      "icon": "mail",
+      "url": "mailto:zy.zhang0212@gmail.com"
+    }
+  ]
+}
