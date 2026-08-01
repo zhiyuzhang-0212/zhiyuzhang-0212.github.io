@@ -62,7 +62,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong> published at <strong>ICASSP 2026</strong>."
+        "content": "<strong>MELA-TTS</strong>, a joint transformer–diffusion TTS model on continuous speech features, published at <strong>ICASSP 2026</strong>."
       },
       {
         "date": "2026.01",
@@ -74,7 +74,7 @@
       },
       {
         "date": "2025.06",
-        "content": "<strong>SMRU-Lite</strong> published at <strong>IJCNN 2025</strong>."
+        "content": "<strong>SMRU-Lite</strong>, an efficient low-complexity speech-enhancement model with uncertainty estimation, published at <strong>IJCNN 2025</strong>."
       }
     ]
   },
@@ -90,7 +90,7 @@
         "venue": "Technical Report · OpenMOSS",
         "year": "2026",
         "highlight": "Core contributor",
-        "description": "MOVA is a dual-tower diffusion model for scalable, synchronized video–audio generation. A video tower with a high-/low-noise mixture-of-experts design and a dedicated audio tower are coupled through bridge cross-attention, enabling image-to-video-audio (and emergent text-to-video-audio) synthesis at 360p and 720p. As one of the first open-source video–audio generation models, it delivers high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality.",
+        "description": "MOVA is a dual-tower diffusion model for scalable, synchronized video–audio generation. A video tower with a high-/low-noise mixture-of-experts design and a dedicated audio tower are coupled through bridge cross-attention, enabling image-to-video-audio (and emergent text-to-video-audio) synthesis at 360p and 720p. As one of the first open-source video–audio generation models, it delivers high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality.  Since release it has drawn <strong>~1k★ on GitHub</strong> and <strong>~100k monthly downloads on Hugging Face</strong>.",
         "tags": [
           "Video-Audio",
           "Diffusion",

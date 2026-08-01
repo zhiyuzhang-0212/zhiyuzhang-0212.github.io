@@ -62,7 +62,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>。"
+        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>——基于连续语音特征的 transformer–diffusion 联合 TTS 模型。"
       },
       {
         "date": "2026.01",
@@ -74,7 +74,7 @@
       },
       {
         "date": "2025.06",
-        "content": "<strong>SMRU-Lite</strong> 发表于 <strong>IJCNN 2025</strong>。"
+        "content": "<strong>SMRU-Lite</strong> 发表于 <strong>IJCNN 2025</strong>——带不确定性估计的高效低复杂度语音增强模型。"
       }
     ]
   },
@@ -90,7 +90,7 @@
         "venue": "技术报告 · OpenMOSS",
         "year": "2026",
         "highlight": "核心贡献者",
-        "description": "MOVA 是一个面向可扩展、同步音视频生成的双塔扩散模型。视频塔采用高噪/低噪混合专家（MoE）架构，与独立的音频塔通过 bridge cross-attention 相耦合，支持 360p 与 720p 下的图生音视频（IT2VA，并涌现出一定的文生音视频 T2VA 能力）。作为最早的开源音视频生成模型之一，它可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。",
+        "description": "MOVA 是一个面向可扩展、同步音视频生成的双塔扩散模型。视频塔采用高噪/低噪混合专家（MoE）架构，与独立的音频塔通过 bridge cross-attention 相耦合，支持 360p 与 720p 下的图生音视频（IT2VA，并涌现出一定的文生音视频 T2VA 能力）。作为最早的开源音视频生成模型之一，它可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。发布以来已获得 <strong>GitHub 约 1k★</strong> 与 <strong>Hugging Face 单月约 10 万次下载</strong>。",
         "tags": [
           "音视频",
           "扩散模型",
