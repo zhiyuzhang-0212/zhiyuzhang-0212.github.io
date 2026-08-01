@@ -98,8 +98,8 @@
         ],
         "links": [
           {
-            "label": "论文",
-            "icon": "paper",
+            "label": "arXiv",
+            "icon": "arxiv",
             "url": "https://arxiv.org/abs/2602.08794"
           },
           {
@@ -108,7 +108,7 @@
             "url": "https://github.com/OpenMOSS/MOVA"
           },
           {
-            "label": "博客",
+            "label": "演示",
             "icon": "demo",
             "url": "https://mosi.cn/models/mova"
           },
