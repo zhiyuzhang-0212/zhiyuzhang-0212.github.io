@@ -32,11 +32,26 @@
   }
   function projX(lon) { return (lon + 180) / 360 * S.W; }
   function projY(lat) { return (LAT_TOP - lat) / LAT_SPAN * S.H; }
-  function rgbOf(hex) {
-    hex = (hex || "#4dd6c1").replace("#", "");
-    if (hex.length === 3) hex = hex.split("").map(function (c) { return c + c; }).join("");
-    var n = parseInt(hex, 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  // Heat ramp: sparse (cool blue/cyan) → dense (warm green/yellow/orange).
+  // Ends on a saturated orange (not white) so the hot end stays visible in
+  // both the dark and light themes.
+  var HEAT = [
+    [0.00, 56, 110, 180],   // blue
+    [0.30, 46, 200, 200],   // cyan
+    [0.55, 110, 220, 120],  // green
+    [0.78, 240, 210, 90],   // yellow
+    [1.00, 244, 128, 64],   // orange
+  ];
+  function heat(t) {
+    if (t <= HEAT[0][0]) return [HEAT[0][1], HEAT[0][2], HEAT[0][3]];
+    for (var i = 1; i < HEAT.length; i++) {
+      if (t <= HEAT[i][0]) {
+        var a = HEAT[i - 1], b = HEAT[i], f = (t - a[0]) / (b[0] - a[0]);
+        return [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f, a[3] + (b[3] - a[3]) * f];
+      }
+    }
+    var l = HEAT[HEAT.length - 1];
+    return [l[1], l[2], l[3]];
   }
 
   function resize() {
@@ -130,12 +145,10 @@
 
     var t = S.tick;
     var vs = S.visitors, dens = S.dens;
-    var col = rgbOf(accent2), cr = col[0], cg = col[1], cb = col[2];
 
-    // Solid green dots — no halos. Density drives how bright / vivid each
-    // dot is: sparse points sit faint and slightly desaturated (mixed
-    // toward a dim grey-green), dense ones ramp up to full-saturation,
-    // fully-opaque, and a touch larger so crowded areas clearly "burn in".
+    // Solid dots — no halos. Density drives the HUE (heat ramp: cool blue
+    // when sparse → warm orange when dense), plus opacity and size, so a
+    // crowded metro clearly "burns" warmer/brighter/bigger than a lone dot.
     for (var i = 0; i < vs.length; i++) {
       var v = vs[i];
       if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
@@ -143,13 +156,10 @@
       var nd = dens[i] || 0;                                  // 0..1
       var phase = (v.lng * 1.7 + v.lat * 2.3);
       var tw = reduce ? 1 : 0.82 + 0.18 * Math.sin(t * 0.05 + phase);
-      var sat = 0.35 + 0.65 * nd;                             // low density → toward grey-green
-      var r = cr * sat + 90 * (1 - sat);                      // 90 = neutral grey to desaturate toward
-      var g2 = cg * sat + 90 * (1 - sat);
-      var b = cb * sat + 90 * (1 - sat);
-      var a = (0.4 + 0.6 * nd) * tw;                          // brightness/opacity rises with density
-      var rad = 1.7 + 1.6 * nd;                               // dense dots a little bigger
-      ctx.fillStyle = "rgba(" + (r | 0) + "," + (g2 | 0) + "," + (b | 0) + "," + a + ")";
+      var hc = heat(nd);
+      var a = (0.55 + 0.45 * nd) * tw;                        // hotter dots also more opaque
+      var rad = 1.7 + 1.6 * nd;                               // and a little bigger
+      ctx.fillStyle = "rgba(" + (hc[0] | 0) + "," + (hc[1] | 0) + "," + (hc[2] | 0) + "," + a + ")";
       ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
     }
 
