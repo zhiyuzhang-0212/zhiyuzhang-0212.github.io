@@ -283,11 +283,22 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .card__authors { color: var(--text-soft); font-size: .92rem; margin: 0 0 .6rem; }
 .card__authors strong { color: var(--text); font-weight: 700; }
 .card__desc { color: var(--text-soft); font-size: .95rem; margin: 0 0 1rem; }
-/* Tags — flat metadata labels under the figure, deliberately NOT button-like */
-.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .7rem; margin: 0; }
+/* Tags — refined chips under the figure; different hue + no hover, so they read as metadata not buttons */
+.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .45rem; margin: 0; }
 .card__body > .tags { justify-content: flex-start; margin-bottom: 1rem; }
-.tag { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .03em; color: var(--text-dim); padding: 0; border: 0; background: none; }
-.tag::before { content: "#"; opacity: .55; margin-right: .05em; }
+.tag {
+  display: inline-flex; align-items: center; gap: .38rem;
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .02em;
+  color: var(--accent-2);
+  padding: .26rem .62rem .26rem .55rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent-2) 28%, transparent);
+  background: color-mix(in srgb, var(--accent-2) 10%, transparent);
+}
+.tag::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent-2); flex: none;
+}
 
 /* Link buttons — clearly interactive: accent-tinted, filled, lift on hover */
 .links { display: flex; flex-wrap: wrap; gap: .55rem; }
