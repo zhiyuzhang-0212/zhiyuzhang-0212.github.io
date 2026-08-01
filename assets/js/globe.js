@@ -32,6 +32,12 @@
   }
   function projX(lon) { return (lon + 180) / 360 * S.W; }
   function projY(lat) { return (LAT_TOP - lat) / LAT_SPAN * S.H; }
+  function rgbOf(hex) {
+    hex = (hex || "#4dd6c1").replace("#", "");
+    if (hex.length === 3) hex = hex.split("").map(function (c) { return c + c; }).join("");
+    var n = parseInt(hex, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
 
   function resize() {
     var c = S.canvas; if (!c) return;
@@ -47,13 +53,12 @@
   }
 
   /* ---------- per-point density → normalized brightness ----------
-     Every visitor stays its own dot — we DON'T merge them. To avoid
-     the additive halos piling into a blown-out blob, glows are drawn
-     with "lighten" (max) compositing instead of "lighter" (sum), and
-     each point's brightness is set by how crowded its neighbourhood
-     is. Density = a Gaussian sum over neighbours (in screen px), then
-     normalized across all points (log-compressed, 0..1) so it reads
-     relatively — like softmax — rather than by absolute counts. */
+     Every visitor stays its own dot — we DON'T merge them. Each dot's
+     brightness / saturation / size is set by how crowded its
+     neighbourhood is. Density = a Gaussian sum over neighbours (in
+     screen px), then normalized across all points (log-compressed,
+     0..1) so it reads relatively — like softmax — rather than by
+     absolute counts. */
   function buildDensity() {
     var pts = S.visitors, n = pts.length, d = new Array(n);
     for (var k = 0; k < n; k++) d[k] = 0;
@@ -115,7 +120,7 @@
     }
   }
 
-  /* ---------- animated layer: glowing visitor lights ---------- */
+  /* ---------- animated layer: green visitor dots ---------- */
   function draw() {
     var ctx = S.ctx; if (!ctx || !S.W) return;
     var accent2 = css("--accent-2") || "#4dd6c1";
@@ -123,42 +128,29 @@
     ctx.clearRect(0, 0, S.W, S.H);
     if (S.base) ctx.drawImage(S.base, 0, 0, S.W, S.H);
 
-    var glow = Math.max(7, S.W * 0.014);
     var t = S.tick;
     var vs = S.visitors, dens = S.dens;
+    var col = rgbOf(accent2), cr = col[0], cg = col[1], cb = col[2];
 
-    // Pass 1 — halos with "lighten" (max) so overlaps take the brightest
-    // value instead of summing into a blown-out blob. Brightness follows
-    // each point's normalized local density: sparse = dim, dense = bright.
-    ctx.globalCompositeOperation = "lighten";
+    // Solid green dots — no halos. Density drives how bright / vivid each
+    // dot is: sparse points sit faint and slightly desaturated (mixed
+    // toward a dim grey-green), dense ones ramp up to full-saturation,
+    // fully-opaque, and a touch larger so crowded areas clearly "burn in".
     for (var i = 0; i < vs.length; i++) {
       var v = vs[i];
       if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
       var x = projX(v.lng), y = projY(v.lat);
-      var nd = dens[i] || 0;                                // 0..1
+      var nd = dens[i] || 0;                                  // 0..1
       var phase = (v.lng * 1.7 + v.lat * 2.3);
-      var tw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + phase);
-      var a0 = (0.28 + 0.55 * nd) * tw;                     // dim floor keeps lone dots visible
-
-      var g = ctx.createRadialGradient(x, y, 0, x, y, glow);
-      g.addColorStop(0, hexA(accent2, a0));
-      g.addColorStop(0.4, hexA(accent2, a0 * 0.4));
-      g.addColorStop(1, hexA(accent2, 0));
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(x, y, glow, 0, 6.2832); ctx.fill();
-    }
-
-    // Pass 2 — every visitor's core dot on top, so none get hidden by a
-    // brighter neighbour's halo. Drawn normally (no additive stacking).
-    ctx.globalCompositeOperation = "source-over";
-    for (var j = 0; j < vs.length; j++) {
-      var w = vs[j];
-      if (typeof w.lat !== "number" || typeof w.lng !== "number") continue;
-      var cx = projX(w.lng), cy = projY(w.lat), cnd = dens[j] || 0;
-      var cphase = (w.lng * 1.7 + w.lat * 2.3);
-      var ctw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + cphase);
-      ctx.fillStyle = "rgba(233,255,250," + ((0.5 + 0.45 * cnd) * ctw) + ")";
-      ctx.beginPath(); ctx.arc(cx, cy, 1.6, 0, 6.2832); ctx.fill();
+      var tw = reduce ? 1 : 0.82 + 0.18 * Math.sin(t * 0.05 + phase);
+      var sat = 0.35 + 0.65 * nd;                             // low density → toward grey-green
+      var r = cr * sat + 90 * (1 - sat);                      // 90 = neutral grey to desaturate toward
+      var g2 = cg * sat + 90 * (1 - sat);
+      var b = cb * sat + 90 * (1 - sat);
+      var a = (0.4 + 0.6 * nd) * tw;                          // brightness/opacity rises with density
+      var rad = 1.7 + 1.6 * nd;                               // dense dots a little bigger
+      ctx.fillStyle = "rgba(" + (r | 0) + "," + (g2 | 0) + "," + (b | 0) + "," + a + ")";
+      ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
     }
 
     // "you" marker: a pulse ring around your point, then the callout
@@ -168,7 +160,7 @@
         var pr = (t % 110) / 110;
         ctx.strokeStyle = hexA(accent, (1 - pr) * 0.5);
         ctx.lineWidth = 1.3;
-        ctx.beginPath(); ctx.arc(yx, yy, 3 + pr * glow * 1.3, 0, 6.2832); ctx.stroke();
+        ctx.beginPath(); ctx.arc(yx, yy, 3 + pr * 14 * 1.3, 0, 6.2832); ctx.stroke();
       }
       drawYouLabel(ctx, yx, yy, accent2);
     }
