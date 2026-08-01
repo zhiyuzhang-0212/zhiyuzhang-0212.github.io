@@ -1,0 +1,15 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "Tiny free backend that powers the **Browsing Log** globe on the site. It reads a **coarse, city-level** location from Cloudflare's edge (`request.cf`) — no third-party IP-geolocation service — and stores only a **salted hash** of the visitor's IP (never the raw IP) to avoid counting the same person twice. It keeps the last ~60 visitors in a KV ring buffer and returns them as JSON.",
+  "main": "worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wrangler": "^4.118.0"
+  }
+}
