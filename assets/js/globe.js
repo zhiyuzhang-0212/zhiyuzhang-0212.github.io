@@ -18,7 +18,7 @@
   var S = {
     raf: null, canvas: null, ctx: null, count: null, labels: null,
     base: null, bctx: null,
-    visitors: [], you: null, total: 0,
+    visitors: [], clusters: [], you: null, total: 0,
     fetched: false, loading: false, error: false,
     tick: 0, dpr: 1, W: 0, H: 0,
   };
@@ -43,6 +43,36 @@
     c.height = Math.round(S.H * S.dpr);
     S.ctx.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
     buildBase();
+    buildClusters();
+  }
+
+  /* ---------- collapse nearby visitors into one glow ----------
+     Additive blooms from many points in one metro (Shanghai, etc.)
+     otherwise pile up into a blown-out, irregular blob that hides
+     its neighbours. Instead we merge points within a small screen
+     radius into a single cluster and let its COUNT drive brightness
+     and size — so density still reads, cleanly, as one bright dot. */
+  function buildClusters() {
+    if (!S.W) { S.clusters = []; return; }
+    var pts = S.visitors, cl = [];
+    var R = Math.max(7, S.W * 0.014), R2 = R * R;   // merge distance (px)
+    for (var i = 0; i < pts.length; i++) {
+      var v = pts[i];
+      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
+      var x = projX(v.lng), y = projY(v.lat), best = null, bd = R2;
+      for (var j = 0; j < cl.length; j++) {
+        var c = cl[j], dx = c.x - x, dy = c.y - y, d = dx * dx + dy * dy;
+        if (d < bd) { bd = d; best = c; }
+      }
+      if (best) {
+        best.n++; best.slng += v.lng; best.slat += v.lat;
+        best.lng = best.slng / best.n; best.lat = best.slat / best.n;
+        best.x = projX(best.lng); best.y = projY(best.lat);
+      } else {
+        cl.push({ lng: v.lng, lat: v.lat, x: x, y: y, n: 1, slng: v.lng, slat: v.lat });
+      }
+    }
+    S.clusters = cl;
   }
 
   /* ---------- base layer: land dots + faint graticule (drawn once) ---------- */
@@ -84,44 +114,44 @@
     ctx.clearRect(0, 0, S.W, S.H);
     if (S.base) ctx.drawImage(S.base, 0, 0, S.W, S.H);
 
-    var glow = Math.max(9, S.W * 0.018);
+    var glow = Math.max(7, S.W * 0.013);
     var t = S.tick;
     ctx.globalCompositeOperation = "lighter";
-    for (var i = 0; i < S.visitors.length; i++) {
-      var v = S.visitors[i];
-      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
-      var x = projX(v.lng), y = projY(v.lat);
-      var isYou = !!S.you && i === 0;
-      var phase = (v.lng * 1.7 + v.lat * 2.3);
+    for (var i = 0; i < S.clusters.length; i++) {
+      var c = S.clusters[i];
+      var x = c.x, y = c.y;
+      // log-scaled density: 1 visitor → 0, many → grows slowly (never blows out)
+      var dens = Math.log(c.n) / Math.LN2;                 // log2(n)
+      var phase = (c.lng * 1.7 + c.lat * 2.3);
       var tw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + phase);
-      var col = isYou ? accent2 : accent2; // teal city-lights
-      var R = glow * (isYou ? 1.5 : 1);
+      var R = glow * Math.min(2, 1 + dens * 0.18);         // gently larger when denser
+      var a0 = Math.min(0.85, 0.42 + dens * 0.13);         // brighter when denser (capped)
 
-      // outer bloom
+      // outer bloom — a single clean circle per cluster
       var g = ctx.createRadialGradient(x, y, 0, x, y, R);
-      g.addColorStop(0, hexA(col, 0.55 * tw));
-      g.addColorStop(0.4, hexA(col, 0.22 * tw));
-      g.addColorStop(1, hexA(col, 0));
+      g.addColorStop(0, hexA(accent2, a0 * tw));
+      g.addColorStop(0.4, hexA(accent2, a0 * 0.4 * tw));
+      g.addColorStop(1, hexA(accent2, 0));
       ctx.fillStyle = g;
       ctx.beginPath(); ctx.arc(x, y, R, 0, 6.2832); ctx.fill();
 
-      // hot core
+      // hot core — grows a touch with the count
+      var cr = Math.min(4, 1.5 + dens * 0.5);
       ctx.fillStyle = "rgba(233,255,250," + (0.9 * tw) + ")";
-      ctx.beginPath(); ctx.arc(x, y, isYou ? 2.4 : 1.6, 0, 6.2832); ctx.fill();
-
-      // pulse ring on the newest ("you")
-      if (isYou && !reduce) {
-        var pr = (t % 110) / 110;
-        ctx.strokeStyle = hexA(accent, (1 - pr) * 0.5);
-        ctx.lineWidth = 1.3;
-        ctx.beginPath(); ctx.arc(x, y, 3 + pr * glow * 1.3, 0, 6.2832); ctx.stroke();
-      }
+      ctx.beginPath(); ctx.arc(x, y, cr, 0, 6.2832); ctx.fill();
     }
     ctx.globalCompositeOperation = "source-over";
 
-    // "you're here" callout next to the pulsing point (drawn on top, no bloom)
+    // "you" marker: a pulse ring on top of its cluster, then the callout
     if (S.you && typeof S.you.lat === "number" && typeof S.you.lng === "number") {
-      drawYouLabel(ctx, projX(S.you.lng), projY(S.you.lat), accent2);
+      var yx = projX(S.you.lng), yy = projY(S.you.lat);
+      if (!reduce) {
+        var pr = (t % 110) / 110;
+        ctx.strokeStyle = hexA(accent, (1 - pr) * 0.5);
+        ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.arc(yx, yy, 3 + pr * glow * 1.3, 0, 6.2832); ctx.stroke();
+      }
+      drawYouLabel(ctx, yx, yy, accent2);
     }
   }
 
@@ -199,7 +229,9 @@
         S.total = d.total || 0;
         S.you = d.you || null;
         S.visitors = Array.isArray(d.visitors) ? d.visitors : [];
+        buildClusters();
         renderCount();
+        if (reduce) draw();
       })
       .catch(function () { clearTimeout(timer); S.loading = false; S.error = true; S.fetched = true; renderCount(); });
   }
