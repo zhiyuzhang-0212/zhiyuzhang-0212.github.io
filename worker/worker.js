@@ -17,6 +17,9 @@ const ALLOW_ORIGINS = [
   "https://zhiyuzhang.com",
   "https://www.zhiyuzhang.com",
   "https://zhiyuzhang-0212.github.io",
+  // http variants kept only during the HTTPS-cert migration window
+  "http://zhiyuzhang.com",
+  "http://www.zhiyuzhang.com",
 ];
 
 export default {
