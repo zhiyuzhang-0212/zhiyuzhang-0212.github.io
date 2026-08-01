@@ -48,7 +48,7 @@
   var lang = document.documentElement.getAttribute("lang") || "en";
   if (lang !== "en" && lang !== "zh") lang = "en";
 
-  var VER = "13";
+  var VER = "14";
 
   /* ---------- Load + render ---------- */
   function boot() {
@@ -181,6 +181,12 @@
   function buildCard(p, featured) {
     var c = el("article", "card reveal" + (featured ? " card--featured" : ""));
 
+    var tagsEl = null;
+    if (p.tags && p.tags.length) {
+      tagsEl = el("div", "tags");
+      p.tags.forEach(function (t) { tagsEl.appendChild(el("span", "tag", t)); });
+    }
+
     if (p.image) {
       var fig = el("figure", "card__figure");
       var img = el("img", null);
@@ -189,6 +195,7 @@
       img.loading = "lazy";
       fig.appendChild(img);
       if (p.badge) fig.appendChild(el("span", "card__badge", p.badge));
+      if (tagsEl) fig.appendChild(tagsEl);
       c.appendChild(fig);
     }
 
@@ -213,11 +220,7 @@
     body.appendChild(el("p", "card__authors", au));
     body.appendChild(el("p", "card__desc", p.description));
 
-    if (p.tags && p.tags.length) {
-      var tags = el("div", "tags");
-      p.tags.forEach(function (t) { tags.appendChild(el("span", "tag", t)); });
-      body.appendChild(tags);
-    }
+    if (tagsEl && !p.image) body.appendChild(tagsEl);
 
     if (p.links && p.links.length) {
       var links = el("div", "links");

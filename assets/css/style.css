@@ -237,7 +237,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .card__figure {
   position: relative; margin: 0;
   background: transparent;
-  display: flex; align-items: flex-start; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: .9rem;
   padding: 1.5rem 1rem;
 }
 .card__figure img {
@@ -255,7 +256,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--accent) 70%, transparent);
 }
 .card__role--star { color: var(--accent); font-weight: 700; }
-.card__highlight { color: var(--accent); font-weight: 700; }
 .card__eq { color: var(--text-dim); font-size: .82rem; white-space: nowrap; }
 .card__authors sup { color: var(--accent); font-weight: 700; }
 .eq-mark { color: var(--accent); font-weight: 700; }
@@ -278,17 +278,43 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .card__year { font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); }
 .card__venue { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .8rem; color: var(--accent-2); margin-bottom: .5rem; }
 .card__role { color: var(--text-dim); }
+.card__role.card__role--star { color: var(--accent); font-weight: 700; }
+.card__highlight { color: var(--accent); font-weight: 700; }
 .card__authors { color: var(--text-soft); font-size: .92rem; margin: 0 0 .6rem; }
 .card__authors strong { color: var(--text); font-weight: 700; }
 .card__desc { color: var(--text-soft); font-size: .95rem; margin: 0 0 1rem; }
-.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
-.tag { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .02em; color: var(--text-soft); padding: .28rem .6rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-2); }
-.links { display: flex; flex-wrap: wrap; gap: .5rem; }
-.link-btn { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .78rem; color: var(--text-soft); padding: .42rem .8rem; border: 1px solid var(--border); border-radius: 9px; background: var(--bg-2); transition: all .2s var(--ease); }
-.link-btn:hover { color: var(--text); border-color: var(--accent); transform: translateY(-1px); }
-.link-btn.is-todo { opacity: .55; }
+/* Tags — flat metadata labels under the figure, deliberately NOT button-like */
+.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .7rem; margin: 0; }
+.card__body > .tags { justify-content: flex-start; margin-bottom: 1rem; }
+.tag { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .03em; color: var(--text-dim); padding: 0; border: 0; background: none; }
+.tag::before { content: "#"; opacity: .55; margin-right: .05em; }
+
+/* Link buttons — clearly interactive: accent-tinted, filled, lift on hover */
+.links { display: flex; flex-wrap: wrap; gap: .55rem; }
+.link-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-mono); font-size: .8rem; font-weight: 500; line-height: 1;
+  color: var(--accent);
+  padding: .5rem .85rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  cursor: pointer;
+  transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.link-btn span { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; transition: text-decoration-color .2s var(--ease); }
+.link-btn:hover {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.link-btn:hover span { text-decoration-color: currentColor; }
+.link-btn.is-todo { opacity: .5; color: var(--text-dim); background: none; border-color: var(--border); cursor: default; }
+.link-btn.is-todo:hover { transform: none; box-shadow: none; background: none; color: var(--text-dim); }
 .link-btn.is-todo::after { content: "TODO"; font-size: .58rem; padding: .05rem .3rem; border-radius: 4px; background: var(--panel-strong); color: var(--text-dim); }
-.link-btn svg { width: 14px; height: 14px; }
+.link-btn svg { width: 15px; height: 15px; }
 
 /* Timeline (experience + education) */
 .timeline { position: relative; display: grid; gap: 1.6rem; padding-left: 1.6rem; }
