@@ -19,6 +19,7 @@
     raf: null, canvas: null, ctx: null, count: null, labels: null,
     base: null, bctx: null,
     visitors: [], dens: [], you: null, total: 0,
+    hover: null, pinned: null,
     fetched: false, loading: false, error: false,
     tick: 0, dpr: 1, W: 0, H: 0,
   };
@@ -155,10 +156,10 @@
       var x = projX(v.lng), y = projY(v.lat);
       var nd = dens[i] || 0;                                  // 0..1
       var phase = (v.lng * 1.7 + v.lat * 2.3);
-      var tw = reduce ? 1 : 0.82 + 0.18 * Math.sin(t * 0.05 + phase);
+      var s = reduce ? 1 : 0.5 + 0.5 * Math.sin(t * 0.05 + phase);  // 0..1 breath
       var hc = heat(nd);
-      var a = (0.55 + 0.45 * nd) * tw;                        // hotter dots also more opaque
-      var rad = 1.7 + 1.6 * nd;                               // and a little bigger
+      var a = (0.5 + 0.5 * nd) * (0.55 + 0.45 * s);           // breathing brightness
+      var rad = (1.7 + 1.6 * nd) * (reduce ? 1 : 0.86 + 0.14 * s);  // breathing size
       ctx.fillStyle = "rgba(" + (hc[0] | 0) + "," + (hc[1] | 0) + "," + (hc[2] | 0) + "," + a + ")";
       ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
     }
@@ -174,6 +175,16 @@
       }
       drawYouLabel(ctx, yx, yy, accent2);
     }
+
+    // hovered / pinned dot: ring it and show its city · country
+    var act = S.pinned || S.hover;
+    if (act && act.i < vs.length) {
+      var av = vs[act.i], ax = projX(av.lng), ay = projY(av.lat);
+      ctx.strokeStyle = hexA(accent, 0.85);
+      ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(ax, ay, 6, 0, 6.2832); ctx.stroke();
+      drawLabel(ctx, ax, ay, pointText(av), accent);
+    }
   }
 
   function youText() {
@@ -183,8 +194,16 @@
     return (y.flag ? y.flag + " " : "") + here + (place ? " · " + place : "");
   }
 
-  function drawYouLabel(ctx, x, y, accent2) {
-    var txt = youText();
+  function pointText(v) {
+    var L = S.labels || {};
+    return (v.flag ? v.flag + " " : "") +
+      ([v.city, v.country].filter(Boolean).join(", ") || L.somewhere || "");
+  }
+
+  function drawYouLabel(ctx, x, y, accent2) { drawLabel(ctx, x, y, youText(), accent2); }
+
+  function drawLabel(ctx, x, y, txt, accentCol) {
+    if (!txt) return;
     ctx.font = '600 ' + Math.max(10, Math.round(S.W * 0.011)) + 'px ' +
       (css("--font-mono") || "monospace");
     var padX = 7, padY = 4, gap = 10;
@@ -200,7 +219,7 @@
 
     var dark = document.documentElement.getAttribute("data-theme") !== "light";
     // leader line from dot to the pill
-    ctx.strokeStyle = hexA(accent2, 0.5);
+    ctx.strokeStyle = hexA(accentCol, 0.5);
     ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(x, y);
     ctx.lineTo(bx < x ? bx + bw : bx, by + bh / 2); ctx.stroke();
@@ -215,7 +234,7 @@
     ctx.closePath();
     ctx.fillStyle = dark ? "rgba(12,14,22,0.78)" : "rgba(255,255,255,0.82)";
     ctx.fill();
-    ctx.strokeStyle = hexA(accent2, 0.45);
+    ctx.strokeStyle = hexA(accentCol, 0.45);
     ctx.lineWidth = 1;
     ctx.stroke();
     // text
@@ -223,6 +242,41 @@
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
     ctx.fillText(txt, bx + padX, by + bh / 2 + 0.5);
+  }
+
+  /* ---------- pointer interaction: hover / tap a dot for its location ---------- */
+  function pickAt(mx, my) {
+    var vs = S.visitors, best = null, bestd = Infinity;
+    for (var i = 0; i < vs.length; i++) {
+      var v = vs[i];
+      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
+      var x = projX(v.lng), y = projY(v.lat);
+      var dx = x - mx, dy = y - my, d = dx * dx + dy * dy;
+      var thr = (1.7 + 1.6 * (S.dens[i] || 0)) + 6;   // dot radius + slack
+      if (d <= thr * thr && d < bestd) { bestd = d; best = { i: i, v: v, x: x, y: y }; }
+    }
+    return best;
+  }
+  function evtXY(e) {
+    var rect = S.canvas.getBoundingClientRect();
+    var src = (e.touches && e.touches[0]) || e;
+    return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+  }
+  function onMove(e) {
+    if (!S.canvas) return;
+    var p = evtXY(e);
+    S.hover = pickAt(p.x, p.y);
+    S.canvas.style.cursor = S.hover ? "pointer" : "";
+    if (reduce) draw();
+  }
+  function onLeave() { S.hover = null; if (S.canvas) S.canvas.style.cursor = ""; if (reduce) draw(); }
+  function onTap(e) {
+    if (!S.canvas) return;
+    var p = evtXY(e);
+    var hit = pickAt(p.x, p.y);
+    // tap a dot to pin its label; tap it again (or empty space) to clear
+    S.pinned = (hit && S.pinned && S.pinned.i === hit.i) ? null : hit;
+    if (reduce) draw();
   }
 
   function loop() { S.tick++; draw(); S.raf = requestAnimationFrame(loop); }
@@ -266,6 +320,12 @@
     resize();
     window.removeEventListener("resize", resize);
     window.addEventListener("resize", resize);
+    S.canvas.removeEventListener("mousemove", onMove);
+    S.canvas.addEventListener("mousemove", onMove);
+    S.canvas.removeEventListener("mouseleave", onLeave);
+    S.canvas.addEventListener("mouseleave", onLeave);
+    S.canvas.removeEventListener("click", onTap);
+    S.canvas.addEventListener("click", onTap);
     if (reduce) draw(); else loop();
     renderCount();
     if (!S.fetched) fetchData(opts.endpoint);
