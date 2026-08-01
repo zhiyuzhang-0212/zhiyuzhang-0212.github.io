@@ -1,47 +1,37 @@
 /* =========================================================
-   Visitor "Browsing Log" — rotating wireframe globe
-   Pure canvas, no libs. Orthographic projection, graticule +
-   glowing dots. Colors read from CSS vars so it tracks the
-   theme. Data comes from the Cloudflare Worker (meta.browsingApi).
-   Exposes window.VisitorGlobe.mount({canvas,list,endpoint,labels}).
+   Visitor "Browsing Log" — flat world map, city-lights style
+   Faint dotted continents (window.WORLD_DOTS) + glowing visitor
+   points drawn with additive blending, so clusters bloom brighter
+   like city lights seen from orbit. No rotation, no list.
+   Colors read from CSS vars so it tracks the theme.
+   Exposes window.VisitorMap.mount({canvas, count, endpoint, labels}).
    ========================================================= */
 (function () {
   "use strict";
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Equirectangular crop (skips empty polar bands so the map fills the frame)
+  var LAT_TOP = 83, LAT_BOT = -56;
+  var LAT_SPAN = LAT_TOP - LAT_BOT;
+
   var S = {
-    raf: null, canvas: null, ctx: null, list: null, labels: null,
+    raf: null, canvas: null, ctx: null, count: null, labels: null,
+    base: null, bctx: null,
     visitors: [], you: null, total: 0,
     fetched: false, loading: false, error: false,
-    rot: -2.0, tick: 0, dpr: 1, W: 0, H: 0, R: 0, cx: 0, cy: 0,
+    tick: 0, dpr: 1, W: 0, H: 0,
   };
 
-  function el(tag, cls, html) {
-    var n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (html != null) n.innerHTML = html;
-    return n;
-  }
-  function css(v) {
-    return getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-  }
+  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
   function hexA(hex, a) {
     hex = (hex || "#7c8cff").replace("#", "");
     if (hex.length === 3) hex = hex.split("").map(function (c) { return c + c; }).join("");
     var n = parseInt(hex, 16);
     return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")";
   }
-
-  /* ---------- projection ---------- */
-  function project(lat, lng, rot) {
-    var phi = lat * Math.PI / 180, lam = lng * Math.PI / 180 + rot;
-    return {
-      x: Math.cos(phi) * Math.sin(lam),
-      y: Math.sin(phi),
-      z: Math.cos(phi) * Math.cos(lam),
-    };
-  }
+  function projX(lon) { return (lon + 180) / 360 * S.W; }
+  function projY(lat) { return (LAT_TOP - lat) / LAT_SPAN * S.H; }
 
   function resize() {
     var c = S.canvas; if (!c) return;
@@ -52,123 +42,99 @@
     c.width = Math.round(S.W * S.dpr);
     c.height = Math.round(S.H * S.dpr);
     S.ctx.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
-    S.R = Math.min(S.W, S.H) * 0.42;
-    S.cx = S.W / 2; S.cy = S.H / 2;
+    buildBase();
   }
 
-  function arc(ctx, coords, R, cx, cy, style) {
-    ctx.beginPath();
-    var started = false;
-    for (var i = 0; i < coords.length; i++) {
-      var p = project(coords[i][0], coords[i][1], S.rot);
-      var x = cx + p.x * R, y = cy - p.y * R;
-      if (p.z >= -0.02) {
-        if (!started) { ctx.moveTo(x, y); started = true; }
-        else ctx.lineTo(x, y);
-      } else started = false;
+  /* ---------- base layer: land dots + faint graticule (drawn once) ---------- */
+  function buildBase() {
+    if (!S.base) { S.base = document.createElement("canvas"); S.bctx = S.base.getContext("2d"); }
+    S.base.width = Math.round(S.W * S.dpr);
+    S.base.height = Math.round(S.H * S.dpr);
+    var ctx = S.bctx;
+    ctx.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
+    ctx.clearRect(0, 0, S.W, S.H);
+    var dark = document.documentElement.getAttribute("data-theme") !== "light";
+    var accent = css("--accent") || "#7c8cff";
+
+    // graticule — echoes the site's background grid, very faint
+    ctx.strokeStyle = hexA(accent, dark ? 0.05 : 0.07);
+    ctx.lineWidth = 1;
+    for (var lo = -180; lo <= 180; lo += 30) {
+      var x = projX(lo); ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, S.H); ctx.stroke();
     }
-    ctx.strokeStyle = style; ctx.lineWidth = 1; ctx.stroke();
+    for (var la = 60; la >= -40; la -= 30) {
+      var y = projY(la); ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(S.W, y); ctx.stroke();
+    }
+
+    // land dots
+    var dots = window.WORLD_DOTS || [];
+    var r = Math.max(0.6, S.W * 0.0016);
+    ctx.fillStyle = hexA(accent, dark ? 0.16 : 0.22);
+    for (var i = 0; i < dots.length; i++) {
+      var px = projX(dots[i][0]), py = projY(dots[i][1]);
+      ctx.beginPath(); ctx.arc(px, py, r, 0, 6.2832); ctx.fill();
+    }
   }
 
+  /* ---------- animated layer: glowing visitor lights ---------- */
   function draw() {
     var ctx = S.ctx; if (!ctx || !S.W) return;
-    var accent = css("--accent") || "#7c8cff";
     var accent2 = css("--accent-2") || "#4dd6c1";
-    var dark = document.documentElement.getAttribute("data-theme") !== "light";
-    var cx = S.cx, cy = S.cy, R = S.R;
+    var accent = css("--accent") || "#7c8cff";
     ctx.clearRect(0, 0, S.W, S.H);
+    if (S.base) ctx.drawImage(S.base, 0, 0, S.W, S.H);
 
-    // inner sphere fill
-    var g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.1, cx, cy, R);
-    g.addColorStop(0, hexA(accent, dark ? 0.12 : 0.07));
-    g.addColorStop(1, hexA(accent, 0));
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.fill();
-
-    // graticule
-    var gcol = hexA(accent, dark ? 0.11 : 0.16);
-    var la, lo, pts;
-    for (la = -60; la <= 60; la += 30) {
-      pts = [];
-      for (lo = -180; lo <= 180; lo += 5) pts.push([la, lo]);
-      arc(ctx, pts, R, cx, cy, gcol);
-    }
-    for (lo = 0; lo < 360; lo += 30) {
-      pts = [];
-      for (la = -90; la <= 90; la += 5) pts.push([la, lo]);
-      arc(ctx, pts, R, cx, cy, gcol);
-    }
-
-    // rim
-    ctx.strokeStyle = hexA(accent, dark ? 0.3 : 0.4); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
-
-    // visitor dots
+    var glow = Math.max(9, S.W * 0.018);
+    var t = S.tick;
+    ctx.globalCompositeOperation = "lighter";
     for (var i = 0; i < S.visitors.length; i++) {
       var v = S.visitors[i];
-      var p = project(v.lat, v.lng, S.rot);
-      if (p.z < 0) continue;
-      var x = cx + p.x * R, y = cy - p.y * R;
-      var depth = 0.45 + 0.55 * p.z;
+      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
+      var x = projX(v.lng), y = projY(v.lat);
       var isYou = !!S.you && i === 0;
-      var col = isYou ? accent2 : accent;
-      var r = (isYou ? 3.1 : 2.1) * depth;
+      var phase = (v.lng * 1.7 + v.lat * 2.3);
+      var tw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + phase);
+      var col = isYou ? accent2 : accent2; // teal city-lights
+      var R = glow * (isYou ? 1.5 : 1);
+
+      // outer bloom
+      var g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, hexA(col, 0.55 * tw));
+      g.addColorStop(0.4, hexA(col, 0.22 * tw));
+      g.addColorStop(1, hexA(col, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, y, R, 0, 6.2832); ctx.fill();
+
+      // hot core
+      ctx.fillStyle = "rgba(233,255,250," + (0.9 * tw) + ")";
+      ctx.beginPath(); ctx.arc(x, y, isYou ? 2.4 : 1.6, 0, 6.2832); ctx.fill();
+
+      // pulse ring on the newest ("you")
       if (isYou && !reduce) {
-        var pr = (S.tick % 96) / 96;
-        ctx.beginPath(); ctx.arc(x, y, r + pr * 11, 0, 6.2832);
-        ctx.strokeStyle = hexA(col, (1 - pr) * 0.55 * depth); ctx.lineWidth = 1.3; ctx.stroke();
+        var pr = (t % 110) / 110;
+        ctx.strokeStyle = hexA(accent, (1 - pr) * 0.5);
+        ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.arc(x, y, 3 + pr * glow * 1.3, 0, 6.2832); ctx.stroke();
       }
-      ctx.beginPath(); ctx.arc(x, y, r + 2.6, 0, 6.2832); ctx.fillStyle = hexA(col, 0.16 * depth); ctx.fill();
-      ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fillStyle = hexA(col, 0.92 * depth); ctx.fill();
     }
+    ctx.globalCompositeOperation = "source-over";
   }
 
-  function loop() {
-    S.tick++;
-    S.rot += 0.0016;
-    draw();
-    S.raf = requestAnimationFrame(loop);
-  }
+  function loop() { S.tick++; draw(); S.raf = requestAnimationFrame(loop); }
 
-  /* ---------- side panel ---------- */
-  function loc(v) {
-    var a = v.city || v.region || "";
-    var c = v.country || "";
-    if (a && c) return a + ", " + c;
-    return a || c || (S.labels && S.labels.somewhere) || "Somewhere";
-  }
-  function ago(ts) {
-    var L = S.labels, s = Math.max(0, (Date.now() - ts) / 1000);
-    if (s < 60) return L.justNow;
-    var m = Math.floor(s / 60); if (m < 60) return m + L.mAgo;
-    var h = Math.floor(m / 60); if (h < 24) return h + L.hAgo;
-    return Math.floor(h / 24) + L.dAgo;
-  }
-  function row(v, you) {
-    var r = el("div", "vg-row" + (you ? " vg-row--you" : ""));
-    r.appendChild(el("span", "vg-flag", v.flag || "📍"));
-    r.appendChild(el("span", "vg-loc", loc(v)));
-    r.appendChild(el("span", "vg-ago", you ? S.labels.you : ago(v.ts)));
-    return r;
-  }
-  function renderList() {
-    var host = S.list, L = S.labels; if (!host || !L) return;
-    host.innerHTML = "";
+  function renderCount() {
+    if (!S.count || !S.labels) return;
+    if (S.error) { S.count.textContent = S.labels.offline; S.count.classList.add("is-note"); return; }
+    if (!S.fetched && S.loading) { S.count.textContent = S.labels.loading; S.count.classList.add("is-note"); return; }
+    S.count.classList.remove("is-note");
     var n = S.total || S.visitors.length || 0;
-    host.appendChild(el("div", "vg-count",
-      '<span class="vg-count__n">' + n + '</span> <span class="vg-count__l">' + L.visitors + "</span>"));
-    if (S.you) host.appendChild(row(S.you, true));
-    var recent = el("div", "vg-list");
-    var start = S.you ? 1 : 0;
-    S.visitors.slice(start, start + 8).forEach(function (v) { recent.appendChild(row(v, false)); });
-    host.appendChild(recent);
-    if (S.error) host.appendChild(el("div", "vg-note", L.offline));
-    else if (S.loading && !S.fetched) host.appendChild(el("div", "vg-note", L.loading));
+    S.count.innerHTML = '<span class="map-count__n">' + n + '</span> ' +
+      '<span class="map-count__l">' + S.labels.visitors + "</span>";
   }
 
   function fetchData(ep) {
-    if (!ep || /YOUR-WORKER|example\.com|REPLACE/.test(ep)) { S.error = true; renderList(); return; }
-    S.loading = true; renderList();
+    if (!ep || /YOUR-WORKER|example\.com|REPLACE/.test(ep)) { S.error = true; renderCount(); return; }
+    S.loading = true; renderCount();
     fetch(ep, { mode: "cors" })
       .then(function (r) { return r.json(); })
       .then(function (d) {
@@ -176,25 +142,24 @@
         S.total = d.total || 0;
         S.you = d.you || null;
         S.visitors = Array.isArray(d.visitors) ? d.visitors : [];
-        renderList();
+        renderCount();
       })
-      .catch(function () { S.loading = false; S.error = true; S.fetched = true; renderList(); });
+      .catch(function () { S.loading = false; S.error = true; S.fetched = true; renderCount(); });
   }
 
-  /* ---------- public ---------- */
   function mount(opts) {
     S.labels = opts.labels || {};
     S.canvas = opts.canvas;
     S.ctx = S.canvas.getContext("2d");
-    S.list = opts.list;
+    S.count = opts.count || null;
     if (S.raf) { cancelAnimationFrame(S.raf); S.raf = null; }
     resize();
     window.removeEventListener("resize", resize);
     window.addEventListener("resize", resize);
     if (reduce) draw(); else loop();
-    renderList();
+    renderCount();
     if (!S.fetched) fetchData(opts.endpoint);
   }
 
-  window.VisitorGlobe = { mount: mount };
+  window.VisitorMap = { mount: mount };
 })();

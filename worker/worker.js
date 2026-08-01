@@ -4,17 +4,15 @@
    - Reads COARSE, city-level geo straight from request.cf
      (provided by Cloudflare's edge — no third-party IP API).
    - Stores ONLY a salted hash of the IP, never the raw IP,
-     and only to dedupe repeat visits within a short window.
-   - Keeps a ring buffer of the most recent visitors in KV and
-     returns them (plus a running total) as JSON for the globe.
+     used to keep exactly one persistent entry per unique visitor.
+   - Keeps every unique visitor ever seen in KV and returns them
+     (plus a running total) as JSON for the map. Newest first.
 
    Bindings expected (see wrangler.toml):
      - KV namespace `VISITS`
      - var `SALT` (any random string)
    ========================================================= */
 
-const MAX = 60;            // recent visitors kept in the ring buffer
-const DEDUPE_HOURS = 6;    // same visitor within this window updates in place
 const ALLOW_ORIGIN = "https://zhiyuzhang-0212.github.io";
 
 export default {
@@ -46,9 +44,8 @@ export default {
     if (isFinite(lat) && isFinite(lng)) {
       const ip = request.headers.get("CF-Connecting-IP") || "";
       const id = await hash(ip + "|" + (env.SALT || "salt"));
-      const cutoff = now - DEDUPE_HOURS * 3600 * 1000;
       const idx = list.findIndex((v) => v.id === id);
-      const isNew = idx === -1 || list[idx].ts < cutoff;
+      const isNew = idx === -1;   // count each unique visitor once, ever
 
       me = {
         id,
@@ -60,9 +57,10 @@ export default {
         lng: round(lng),
         ts: now,
       };
+      // One persistent entry per unique visitor; revisits move to the front
+      // and refresh the timestamp, but nothing is ever dropped.
       if (idx !== -1) list.splice(idx, 1);
       list.unshift(me);
-      if (list.length > MAX) list = list.slice(0, MAX);
       if (isNew) total += 1;
       await env.VISITS.put("log", JSON.stringify({ visitors: list, total }));
     }

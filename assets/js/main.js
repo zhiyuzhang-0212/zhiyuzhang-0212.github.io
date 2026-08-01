@@ -48,7 +48,7 @@
   var lang = document.documentElement.getAttribute("lang") || "en";
   if (lang !== "en" && lang !== "zh") lang = "en";
 
-  var VER = "21";
+  var VER = "22";
 
   /* ---------- Load + render ---------- */
   function boot() {
@@ -333,26 +333,26 @@
     $("[data-footer='copyright']").textContent = DATA.footer.copyright;
   }
 
-  /* ---------- Browsing log (visitor globe) ---------- */
+  /* ---------- Browsing log (visitor lights map) ---------- */
   function renderBrowsing() {
     var b = $("#browsingBlock"); if (!b) return;
     b.innerHTML = "";
     if (!DATA.browsingLog) return;
     head(b, DATA.browsingLog);
-    var wrap = el("div", "globe-wrap reveal");
-    var stage = el("div", "globe-stage");
+    var wrap = el("div", "map-wrap reveal");
+    var stage = el("div", "map-stage");
     var canvas = document.createElement("canvas");
-    canvas.className = "globe-canvas";
+    canvas.className = "map-canvas";
     canvas.setAttribute("aria-hidden", "true");
+    var count = el("div", "map-count");
     stage.appendChild(canvas);
-    var panel = el("div", "visitor-panel");
+    stage.appendChild(count);
     wrap.appendChild(stage);
-    wrap.appendChild(panel);
     b.appendChild(wrap);
-    if (window.VisitorGlobe) {
-      window.VisitorGlobe.mount({
+    if (window.VisitorMap) {
+      window.VisitorMap.mount({
         canvas: canvas,
-        list: panel,
+        count: count,
         endpoint: (META && META.browsingApi) || "",
         labels: DATA.browsingLog.labels || {},
       });
