@@ -277,10 +277,9 @@
           {
             "text": "Co-first author of MELA-TTS (ICASSP 2026), a joint transformer–diffusion TTS model built on continuous speech features.",
             "sub": [
-              "Designed the architecture to generate continuous acoustic features directly, removing the discrete speech tokenizer and the information loss it introduces.",
-              "Proposed a representation-alignment objective tying the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
-              "Reached state-of-the-art character error rate among comparable systems while keeping the model streaming-capable.",
-              "Ran the large-scale training and ablation studies, and the objective/subjective evaluation used in the paper."
+              "Operates directly on continuous acoustic features, removing the discrete speech tokenizer and the information loss it introduces.",
+              "A representation-alignment objective ties the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
+              "Reaches a state-of-the-art character error rate among comparable systems while remaining streaming-capable."
             ]
           }
         ]
