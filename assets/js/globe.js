@@ -18,7 +18,7 @@
   var S = {
     raf: null, canvas: null, ctx: null, count: null, labels: null,
     base: null, bctx: null,
-    visitors: [], clusters: [], you: null, total: 0,
+    visitors: [], dens: [], you: null, total: 0,
     fetched: false, loading: false, error: false,
     tick: 0, dpr: 1, W: 0, H: 0,
   };
@@ -43,36 +43,45 @@
     c.height = Math.round(S.H * S.dpr);
     S.ctx.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
     buildBase();
-    buildClusters();
+    buildDensity();
   }
 
-  /* ---------- collapse nearby visitors into one glow ----------
-     Additive blooms from many points in one metro (Shanghai, etc.)
-     otherwise pile up into a blown-out, irregular blob that hides
-     its neighbours. Instead we merge points within a small screen
-     radius into a single cluster and let its COUNT drive brightness
-     and size — so density still reads, cleanly, as one bright dot. */
-  function buildClusters() {
-    if (!S.W) { S.clusters = []; return; }
-    var pts = S.visitors, cl = [];
-    var R = Math.max(7, S.W * 0.014), R2 = R * R;   // merge distance (px)
-    for (var i = 0; i < pts.length; i++) {
+  /* ---------- per-point density → normalized brightness ----------
+     Every visitor stays its own dot — we DON'T merge them. To avoid
+     the additive halos piling into a blown-out blob, glows are drawn
+     with "lighten" (max) compositing instead of "lighter" (sum), and
+     each point's brightness is set by how crowded its neighbourhood
+     is. Density = a Gaussian sum over neighbours (in screen px), then
+     normalized across all points (log-compressed, 0..1) so it reads
+     relatively — like softmax — rather than by absolute counts. */
+  function buildDensity() {
+    var pts = S.visitors, n = pts.length, d = new Array(n);
+    for (var k = 0; k < n; k++) d[k] = 0;
+    if (!S.W || !n) { S.dens = d; return; }
+    var rho = Math.max(8, S.W * 0.018);         // neighbourhood radius (px)
+    var inv = 1 / (2 * rho * rho);
+    var xs = new Array(n), ys = new Array(n), ok = new Array(n);
+    for (var i = 0; i < n; i++) {
       var v = pts[i];
-      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
-      var x = projX(v.lng), y = projY(v.lat), best = null, bd = R2;
-      for (var j = 0; j < cl.length; j++) {
-        var c = cl[j], dx = c.x - x, dy = c.y - y, d = dx * dx + dy * dy;
-        if (d < bd) { bd = d; best = c; }
-      }
-      if (best) {
-        best.n++; best.slng += v.lng; best.slat += v.lat;
-        best.lng = best.slng / best.n; best.lat = best.slat / best.n;
-        best.x = projX(best.lng); best.y = projY(best.lat);
-      } else {
-        cl.push({ lng: v.lng, lat: v.lat, x: x, y: y, n: 1, slng: v.lng, slat: v.lat });
-      }
+      ok[i] = typeof v.lat === "number" && typeof v.lng === "number";
+      if (ok[i]) { xs[i] = projX(v.lng); ys[i] = projY(v.lat); }
     }
-    S.clusters = cl;
+    var dmax = 0;
+    for (var a = 0; a < n; a++) {
+      if (!ok[a]) continue;
+      var s = 0;
+      for (var b = 0; b < n; b++) {
+        if (!ok[b]) continue;
+        var dx = xs[a] - xs[b], dy = ys[a] - ys[b];
+        s += Math.exp(-(dx * dx + dy * dy) * inv);
+      }
+      d[a] = s; if (s > dmax) dmax = s;
+    }
+    var lmax = Math.log(dmax + 1) || 1;         // log-compress so one hot metro
+    for (var c = 0; c < n; c++) {               // doesn't crush everywhere else
+      d[c] = ok[c] ? Math.log(d[c] + 1) / lmax : 0;   // 0..1, sparsest→0, densest→1
+    }
+    S.dens = d;
   }
 
   /* ---------- base layer: land dots + faint graticule (drawn once) ---------- */
@@ -114,35 +123,45 @@
     ctx.clearRect(0, 0, S.W, S.H);
     if (S.base) ctx.drawImage(S.base, 0, 0, S.W, S.H);
 
-    var glow = Math.max(7, S.W * 0.013);
+    var glow = Math.max(7, S.W * 0.014);
     var t = S.tick;
-    ctx.globalCompositeOperation = "lighter";
-    for (var i = 0; i < S.clusters.length; i++) {
-      var c = S.clusters[i];
-      var x = c.x, y = c.y;
-      // log-scaled density: 1 visitor → 0, many → grows slowly (never blows out)
-      var dens = Math.log(c.n) / Math.LN2;                 // log2(n)
-      var phase = (c.lng * 1.7 + c.lat * 2.3);
-      var tw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + phase);
-      var R = glow * Math.min(2, 1 + dens * 0.18);         // gently larger when denser
-      var a0 = Math.min(0.85, 0.42 + dens * 0.13);         // brighter when denser (capped)
+    var vs = S.visitors, dens = S.dens;
 
-      // outer bloom — a single clean circle per cluster
-      var g = ctx.createRadialGradient(x, y, 0, x, y, R);
-      g.addColorStop(0, hexA(accent2, a0 * tw));
-      g.addColorStop(0.4, hexA(accent2, a0 * 0.4 * tw));
+    // Pass 1 — halos with "lighten" (max) so overlaps take the brightest
+    // value instead of summing into a blown-out blob. Brightness follows
+    // each point's normalized local density: sparse = dim, dense = bright.
+    ctx.globalCompositeOperation = "lighten";
+    for (var i = 0; i < vs.length; i++) {
+      var v = vs[i];
+      if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
+      var x = projX(v.lng), y = projY(v.lat);
+      var nd = dens[i] || 0;                                // 0..1
+      var phase = (v.lng * 1.7 + v.lat * 2.3);
+      var tw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + phase);
+      var a0 = (0.28 + 0.55 * nd) * tw;                     // dim floor keeps lone dots visible
+
+      var g = ctx.createRadialGradient(x, y, 0, x, y, glow);
+      g.addColorStop(0, hexA(accent2, a0));
+      g.addColorStop(0.4, hexA(accent2, a0 * 0.4));
       g.addColorStop(1, hexA(accent2, 0));
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(x, y, R, 0, 6.2832); ctx.fill();
-
-      // hot core — grows a touch with the count
-      var cr = Math.min(4, 1.5 + dens * 0.5);
-      ctx.fillStyle = "rgba(233,255,250," + (0.9 * tw) + ")";
-      ctx.beginPath(); ctx.arc(x, y, cr, 0, 6.2832); ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, glow, 0, 6.2832); ctx.fill();
     }
-    ctx.globalCompositeOperation = "source-over";
 
-    // "you" marker: a pulse ring on top of its cluster, then the callout
+    // Pass 2 — every visitor's core dot on top, so none get hidden by a
+    // brighter neighbour's halo. Drawn normally (no additive stacking).
+    ctx.globalCompositeOperation = "source-over";
+    for (var j = 0; j < vs.length; j++) {
+      var w = vs[j];
+      if (typeof w.lat !== "number" || typeof w.lng !== "number") continue;
+      var cx = projX(w.lng), cy = projY(w.lat), cnd = dens[j] || 0;
+      var cphase = (w.lng * 1.7 + w.lat * 2.3);
+      var ctw = reduce ? 1 : 0.72 + 0.28 * Math.sin(t * 0.05 + cphase);
+      ctx.fillStyle = "rgba(233,255,250," + ((0.5 + 0.45 * cnd) * ctw) + ")";
+      ctx.beginPath(); ctx.arc(cx, cy, 1.6, 0, 6.2832); ctx.fill();
+    }
+
+    // "you" marker: a pulse ring around your point, then the callout
     if (S.you && typeof S.you.lat === "number" && typeof S.you.lng === "number") {
       var yx = projX(S.you.lng), yy = projY(S.you.lat);
       if (!reduce) {
@@ -229,7 +248,7 @@
         S.total = d.total || 0;
         S.you = d.you || null;
         S.visitors = Array.isArray(d.visitors) ? d.visitors : [];
-        buildClusters();
+        buildDensity();
         renderCount();
         if (reduce) draw();
       })
