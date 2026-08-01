@@ -370,5 +370,21 @@
   },
   "footer": {
     "copyright": "© 2026 Zhiyu Zhang."
+  },
+  "browsingLog": {
+    "kicker": "09 — Live",
+    "title": "Browsing Log",
+    "note": "A live globe of where recent visitors have dropped by — coarse, city-level location shown just for fun. No personal data is stored.",
+    "labels": {
+      "visitors": "visitors",
+      "you": "you're here",
+      "somewhere": "Somewhere",
+      "justNow": "just now",
+      "mAgo": "m ago",
+      "hAgo": "h ago",
+      "dAgo": "d ago",
+      "loading": "Connecting to the visitor map…",
+      "offline": "The visitor map is warming up — live data will appear once the backend is connected."
+    }
   }
 }

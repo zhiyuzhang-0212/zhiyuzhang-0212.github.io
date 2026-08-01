@@ -1,0 +1,13 @@
+name = "zzy-browsing-log"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# KV namespace that stores the recent-visitor ring buffer.
+# Replace `id` with the value printed by `wrangler kv namespace create VISITS`.
+kv_namespaces = [
+  { binding = "VISITS", id = "REPLACE_WITH_KV_ID" }
+]
+
+[vars]
+# Any random string — used only to salt the IP hash so raw IPs are never stored.
+SALT = "change-me-to-a-long-random-string"
