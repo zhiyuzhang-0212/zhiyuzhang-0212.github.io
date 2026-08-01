@@ -62,7 +62,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>——基于连续语音特征的 transformer–diffusion 联合 TTS 模型。"
+        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>——免离散 tokenizer 的连续特征 transformer–diffusion TTS。"
       },
       {
         "date": "2026.01",
@@ -74,7 +74,7 @@
       },
       {
         "date": "2025.06",
-        "content": "<strong>SMRU-Lite</strong> 发表于 <strong>IJCNN 2025</strong>——带不确定性估计的高效低复杂度语音增强模型。"
+        "content": "<strong>SMRU-Lite</strong> 发表于 <strong>IJCNN 2025</strong>——带不确定性估计的低复杂度语音增强模型。"
       }
     ]
   },

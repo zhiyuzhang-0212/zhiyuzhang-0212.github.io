@@ -62,7 +62,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong>, a joint transformer–diffusion TTS model on continuous speech features, published at <strong>ICASSP 2026</strong>."
+        "content": "<strong>MELA-TTS</strong> published at <strong>ICASSP 2026</strong> — a tokenizer-free transformer–diffusion TTS on continuous speech features."
       },
       {
         "date": "2026.01",
@@ -74,7 +74,7 @@
       },
       {
         "date": "2025.06",
-        "content": "<strong>SMRU-Lite</strong>, an efficient low-complexity speech-enhancement model with uncertainty estimation, published at <strong>IJCNN 2025</strong>."
+        "content": "<strong>SMRU-Lite</strong> published at <strong>IJCNN 2025</strong> — low-complexity speech enhancement with uncertainty estimation."
       }
     ]
   },
