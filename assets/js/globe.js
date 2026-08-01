@@ -146,6 +146,7 @@
 
     var t = S.tick;
     var vs = S.visitors, dens = S.dens;
+    var s = reduce ? 1 : 0.5 + 0.5 * Math.sin(t * 0.05);     // one shared breath for all dots
 
     // Solid dots — no halos. Density drives the HUE (heat ramp: cool blue
     // when sparse → warm orange when dense), plus opacity and size, so a
@@ -155,8 +156,6 @@
       if (typeof v.lat !== "number" || typeof v.lng !== "number") continue;
       var x = projX(v.lng), y = projY(v.lat);
       var nd = dens[i] || 0;                                  // 0..1
-      var phase = (v.lng * 1.7 + v.lat * 2.3);
-      var s = reduce ? 1 : 0.5 + 0.5 * Math.sin(t * 0.05 + phase);  // 0..1 breath
       var hc = heat(nd);
       var a = (0.5 + 0.5 * nd) * (0.55 + 0.45 * s);           // breathing brightness
       var rad = (1.7 + 1.6 * nd) * (reduce ? 1 : 0.86 + 0.14 * s);  // breathing size
