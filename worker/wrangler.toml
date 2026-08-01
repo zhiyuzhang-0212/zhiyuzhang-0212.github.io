@@ -2,8 +2,14 @@ name = "zzy-browsing-log"
 main = "worker.js"
 compatibility_date = "2024-11-01"
 
-# KV namespace that stores the recent-visitor ring buffer.
-# Replace `id` with the value printed by `wrangler kv namespace create VISITS`.
+# Serve the Worker from a custom domain on the zhiyuzhang.com zone
+# (better China reachability than *.workers.dev). Wrangler provisions
+# the DNS record + edge certificate on deploy.
+routes = [
+  { pattern = "api.zhiyuzhang.com", custom_domain = true }
+]
+
+# KV namespace that stores every unique visitor.
 kv_namespaces = [
   { binding = "VISITS", id = "379b732a330c4803b6dda1c6a64d2211" }
 ]

@@ -189,16 +189,19 @@
   function fetchData(ep) {
     if (!ep || /YOUR-WORKER|example\.com|REPLACE/.test(ep)) { S.error = true; renderCount(); return; }
     S.loading = true; renderCount();
-    fetch(ep, { mode: "cors" })
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
+    fetch(ep, { mode: "cors", signal: ctrl ? ctrl.signal : undefined })
       .then(function (r) { return r.json(); })
       .then(function (d) {
+        clearTimeout(timer);
         S.fetched = true; S.loading = false; S.error = false;
         S.total = d.total || 0;
         S.you = d.you || null;
         S.visitors = Array.isArray(d.visitors) ? d.visitors : [];
         renderCount();
       })
-      .catch(function () { S.loading = false; S.error = true; S.fetched = true; renderCount(); });
+      .catch(function () { clearTimeout(timer); S.loading = false; S.error = true; S.fetched = true; renderCount(); });
   }
 
   function mount(opts) {

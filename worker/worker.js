@@ -13,13 +13,20 @@
      - var `SALT` (any random string)
    ========================================================= */
 
-const ALLOW_ORIGIN = "https://zhiyuzhang-0212.github.io";
+const ALLOW_ORIGINS = [
+  "https://zhiyuzhang.com",
+  "https://www.zhiyuzhang.com",
+  "https://zhiyuzhang-0212.github.io",
+];
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const origin = request.headers.get("Origin") || "";
+    const allowOrigin = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
     const cors = {
-      "Access-Control-Allow-Origin": ALLOW_ORIGIN,
+      "Access-Control-Allow-Origin": allowOrigin,
+      "Vary": "Origin",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Max-Age": "86400",
     };

@@ -7,7 +7,7 @@
   ],
   "avatar": "./assets/img/portrait.png",
   "email": "zy.zhang0212@gmail.com",
-  "browsingApi": "https://zzy-browsing-log.zhiyuzhang-0212.workers.dev/visits",
+  "browsingApi": "https://api.zhiyuzhang.com/visits",
   "accent": "#7c8cff",
   "accent2": "#4dd6c1",
   "sections": [
