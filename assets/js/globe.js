@@ -118,6 +118,60 @@
       }
     }
     ctx.globalCompositeOperation = "source-over";
+
+    // "you're here" callout next to the pulsing point (drawn on top, no bloom)
+    if (S.you && typeof S.you.lat === "number" && typeof S.you.lng === "number") {
+      drawYouLabel(ctx, projX(S.you.lng), projY(S.you.lat), accent2);
+    }
+  }
+
+  function youText() {
+    var y = S.you || {}, L = S.labels || {};
+    var place = [y.city, y.country].filter(Boolean).join(", ") || L.somewhere || "";
+    var here = L.you || "you're here";
+    return (y.flag ? y.flag + " " : "") + here + (place ? " · " + place : "");
+  }
+
+  function drawYouLabel(ctx, x, y, accent2) {
+    var txt = youText();
+    ctx.font = '600 ' + Math.max(10, Math.round(S.W * 0.011)) + 'px ' +
+      (css("--font-mono") || "monospace");
+    var padX = 7, padY = 4, gap = 10;
+    var tw = ctx.measureText(txt).width;
+    var lh = Math.max(12, Math.round(S.W * 0.013));
+    var bw = tw + padX * 2, bh = lh + padY * 2;
+    // prefer upper-right of the dot; flip if it would clip the frame
+    var bx = x + gap, by = y - gap - bh;
+    if (bx + bw > S.W - 4) bx = x - gap - bw;
+    if (bx < 4) bx = 4;
+    if (by < 4) by = y + gap;
+    if (by + bh > S.H - 4) by = S.H - 4 - bh;
+
+    var dark = document.documentElement.getAttribute("data-theme") !== "light";
+    // leader line from dot to the pill
+    ctx.strokeStyle = hexA(accent2, 0.5);
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(bx < x ? bx + bw : bx, by + bh / 2); ctx.stroke();
+    // pill
+    var rr = bh / 2;
+    ctx.beginPath();
+    ctx.moveTo(bx + rr, by);
+    ctx.arcTo(bx + bw, by, bx + bw, by + bh, rr);
+    ctx.arcTo(bx + bw, by + bh, bx, by + bh, rr);
+    ctx.arcTo(bx, by + bh, bx, by, rr);
+    ctx.arcTo(bx, by, bx + bw, by, rr);
+    ctx.closePath();
+    ctx.fillStyle = dark ? "rgba(12,14,22,0.78)" : "rgba(255,255,255,0.82)";
+    ctx.fill();
+    ctx.strokeStyle = hexA(accent2, 0.45);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // text
+    ctx.fillStyle = css("--text") || (dark ? "#e8ecff" : "#141824");
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "left";
+    ctx.fillText(txt, bx + padX, by + bh / 2 + 0.5);
   }
 
   function loop() { S.tick++; draw(); S.raf = requestAnimationFrame(loop); }
