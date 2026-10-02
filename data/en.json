@@ -154,7 +154,7 @@
         "venue": "ICASSP 2026",
         "year": "2026",
         "role": "Co-first author",
-        "description": "MELA-TTS is an end-to-end text-to-speech model that operates directly on continuous speech features, avoiding the information loss of discrete tokenization. By aligning the hidden representations of the language model with an ASR encoder, it eases optimization, accelerates convergence, and strengthens cross-modal semantic consistency. The model reaches state-of-the-art character error rate while supporting streaming generation.",
+        "description": "MELA-TTS is an end-to-end text-to-speech model that operates directly on continuous speech features, avoiding the information loss of discrete tokenization. By aligning the hidden representations of the language model with an ASR encoder, it eases optimization, accelerates convergence, and strengthens cross-modal semantic consistency. This alignment also softly decouples semantic modeling from acoustic modeling: the language model captures semantics, while the diffusion module reconstructs acoustic detail. The model reaches state-of-the-art character error rate while supporting streaming generation.",
         "tags": [
           "TTS",
           "Diffusion",
@@ -279,6 +279,7 @@
             "sub": [
               "Operates directly on continuous acoustic features, removing the discrete speech tokenizer and the information loss it introduces.",
               "A representation-alignment objective ties the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
+              "The alignment also softly decouples semantic modeling from acoustic modeling: the language model captures semantics, while the diffusion module reconstructs acoustic detail.",
               "Reaches a state-of-the-art character error rate among comparable systems while remaining streaming-capable."
             ]
           }
