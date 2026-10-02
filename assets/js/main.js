@@ -20,6 +20,8 @@
     demo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>'
   };
   function icon(name) { return ICONS[name] || ICONS.arxiv; }
+  // Trailing "opens elsewhere" arrow on link buttons — a static cue that they are clickable
+  var GO_ARROW = '<svg class="link-btn__go" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l5-5M4.5 3.5h4v4"/></svg>';
 
   /* ---------- Small helpers ---------- */
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
@@ -48,7 +50,7 @@
   var lang = document.documentElement.getAttribute("lang") || "en";
   if (lang !== "en" && lang !== "zh") lang = "en";
 
-  var VER = "39";
+  var VER = "40";
 
   /* ---------- Load + render ---------- */
   function boot() {
@@ -229,7 +231,7 @@
         var a = el("a", "link-btn", icon(lk.icon) + "<span>" + lk.label + "</span>");
         a.href = lk.url || "#";
         if (!lk.url || lk.url === "#") a.classList.add("is-todo");
-        else { a.target = "_blank"; a.rel = "noopener"; }
+        else { a.target = "_blank"; a.rel = "noopener"; a.insertAdjacentHTML("beforeend", GO_ARROW); }
         links.appendChild(a);
       });
       body.appendChild(links);
