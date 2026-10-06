@@ -15,5 +15,5 @@ routes = [
 [[d1_databases]]
 binding = "DB"
 database_name = "zzy-visitors"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "c60bc739-0161-4738-a613-44f1f4240984"
 migrations_dir = "migrations"
