@@ -9,7 +9,11 @@ routes = [
   { pattern = "api.zhiyuzhang.com", custom_domain = true }
 ]
 
-# KV namespace that stores every unique visitor.
-kv_namespaces = [
-  { binding = "VISITS", id = "379b732a330c4803b6dda1c6a64d2211" }
-]
+# D1 database holding the visitor log (schema: migrations/0001_init.sql).
+# The KV namespace the log used to live in (379b732a330c4803b6dda1c6a64d2211) is no
+# longer bound; it is left untouched as a backup of the pre-D1 data.
+[[d1_databases]]
+binding = "DB"
+database_name = "zzy-visitors"
+database_id = "REPLACE_WITH_D1_ID"
+migrations_dir = "migrations"
