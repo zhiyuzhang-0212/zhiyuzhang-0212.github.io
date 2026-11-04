@@ -35,12 +35,12 @@ personal-website/
 Link buttons whose `url` is `"#"` render greyed-out with a **TODO** badge. Replace the
 `#` with the real URL (arXiv / GitHub / Hugging Face / demo) to activate them.
 
-Content lives in two section groups: `techReport` (MOVA, the featured card) and
-`publications` (the four papers). Each item supports `image` (figure path), `authors`
-(use `<sup>∗</sup>` for equal contribution), `authorsNote`, `role` (badge — "Co-first
-author" is auto-highlighted), `highlight` (bold accent text right after the venue, used
-for MOVA's "Core contributor"), `badge` (ribbon on the figure, currently unused) and
-`links`.
+Content lives in two section groups: `techReport` (MOVA and MOSS-Image, the featured
+cards) and `publications` (the four papers). Each item supports `image` (figure path),
+`authors` (use `<sup>∗</sup>` for equal contribution), `authorsNote`, `role` (badge —
+"Co-first author" is auto-highlighted), `highlight` (bold accent text right after the
+venue, used for the tech-report roles such as MOVA's "Core contributor"), `badge`
+(ribbon on the figure, currently unused) and `links`.
 
 **Only remaining TODO:** `meta.json` → Google Scholar URL. Every other link is live and
 HTTP-verified. The Scholar icon renders greyed-out until a real profile URL is supplied

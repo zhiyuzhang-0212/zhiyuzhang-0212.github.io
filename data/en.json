@@ -57,6 +57,10 @@
         "content": "New multimodal generation work in progress — stay tuned."
       },
       {
+        "date": "2026.10",
+        "content": "<strong>MOSS-Image</strong> released — an open-source 5B text-to-image model with bilingual long-text rendering and layout control (<strong>~2.6k★ on GitHub</strong>, <strong>~4.9M monthly downloads on Hugging Face</strong>)."
+      },
+      {
         "date": "2026.02",
         "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1k★ on GitHub</strong>, <strong>~100k monthly downloads on Hugging Face</strong>)."
       },
@@ -136,6 +140,57 @@
             "label": "HF Paper",
             "icon": "hf",
             "url": "https://huggingface.co/papers/2602.08794"
+          }
+        ]
+      },
+      {
+        "title": "MOSS-Image Technical Report",
+        "image": "./assets/img/pub/moss-image.png",
+        "authors": "MOSI.AI",
+        "venue": "Technical Report · OpenMOSS",
+        "year": "2026",
+        "highlight": "Contributor",
+        "description": "MOSS-Image is an open-source text-to-image system for text-rich, layout-coherent images, built on a 5B single-stream diffusion transformer pretrained from scratch. Natural-language prompts and structured JSON layouts share one text-conditioning pathway, enabling bilingual long-form text rendering, precise layout control and prompts of up to 4K tokens, while an agentic prompt enhancer expands concise requests into detailed content and layout specifications. It achieves open-weight SOTA on long-form text rendering and ranks second end-to-end on the RealLayoutArena human-preference benchmark, behind only GPT Image 2. Since release it has drawn <strong>~2.6k★ on GitHub</strong> and <strong>~4.9M monthly downloads on Hugging Face</strong>.",
+        "tags": [
+          "Text-to-Image",
+          "Diffusion",
+          "Open-source"
+        ],
+        "links": [
+          {
+            "label": "arXiv",
+            "icon": "arxiv",
+            "url": "https://arxiv.org/abs/2610.23374"
+          },
+          {
+            "label": "Code",
+            "icon": "github",
+            "url": "https://github.com/OpenMOSS/MOSS-Image"
+          },
+          {
+            "label": "Demo",
+            "icon": "demo",
+            "url": "https://mosi.cn/models/moss-image"
+          },
+          {
+            "label": "Model Base",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-Base"
+          },
+          {
+            "label": "Model SFT",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-SFT"
+          },
+          {
+            "label": "ComfyUI",
+            "icon": "hf",
+            "url": "https://huggingface.co/Comfy-Org/MOSS-Image"
+          },
+          {
+            "label": "HF Paper",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2610.23374"
           }
         ]
       }
@@ -264,6 +319,14 @@
               "Dual-tower design: a video tower with two-stage high-/low-noise denoising, coupled to a dedicated audio tower through bidirectional cross-attention, so video and audio are generated in sync rather than stitched together.",
               "Supports image-to-video-audio (IT2VA) generation at 360p and 720p, with emergent text-to-video-audio (T2VA) capability.",
               "One of the earliest open-source video-audio generation models — high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality."
+            ]
+          },
+          {
+            "text": "Contributor to MOSS-Image, an open-source text-to-image model with bilingual long-text rendering and layout control.",
+            "sub": [
+              "Single-stream design: a 5B diffusion transformer pretrained from scratch, with natural-language prompts and structured JSON layouts sharing one text-conditioning pathway.",
+              "Renders long Chinese and English text and follows bounding-box layouts, with prompts of up to 4K tokens; an agentic prompt enhancer expands concise requests into detailed generation specifications.",
+              "Open-weight SOTA on long-form text rendering, and second only to GPT Image 2 end-to-end on the RealLayoutArena human-preference benchmark."
             ]
           }
         ]
