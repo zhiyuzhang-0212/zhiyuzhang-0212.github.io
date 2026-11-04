@@ -35,7 +35,7 @@ personal-website/
 Link buttons whose `url` is `"#"` render greyed-out with a **TODO** badge. Replace the
 `#` with the real URL (arXiv / GitHub / Hugging Face / demo) to activate them.
 
-Content lives in two section groups: `techReport` (MOVA and MOSS-Image, the featured
+Content lives in two section groups: `techReport` (MOSS-Image and MOVA, the featured
 cards) and `publications` (the four papers). Each item supports `image` (figure path),
 `authors` (use `<sup>∗</sup>` for equal contribution), `authorsNote`, `role` (badge —
 "Co-first author" is auto-highlighted), `highlight` (bold accent text right after the

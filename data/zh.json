@@ -58,11 +58,11 @@
       },
       {
         "date": "2026.10",
-        "content": "<strong>MOSS-Image</strong> 发布——开源 5B 文生图模型，支持中英文长文本渲染与布局控制（<strong>GitHub 约 2.6k★</strong>，<strong>Hugging Face 单月下载量约 490 万</strong>）。"
+        "content": "<strong>MOSS-Image</strong> 发布——开源 5B 文生图模型，支持中英文长文本渲染与布局控制（<strong>GitHub 约 2.6k★</strong>，<strong>Hugging Face 首月即获约 490 万次下载</strong>）。"
       },
       {
         "date": "2026.02",
-        "content": "<strong>MOVA</strong> 发布——国内最早的开源音视频生成模型（<strong>GitHub 约 1k★</strong>，<strong>Hugging Face 单月下载量约 10 万</strong>）。"
+        "content": "<strong>MOVA</strong> 发布——国内最早的开源音视频生成模型（<strong>GitHub 约 1.1k★</strong>，<strong>Hugging Face 累计下载量约 95 万</strong>，近一个月约 19 万）。"
       },
       {
         "date": "2026.01",
@@ -88,13 +88,64 @@
     "note": "目前在 OpenMOSS 的核心工作。",
     "items": [
       {
+        "title": "MOSS-Image Technical Report",
+        "image": "./assets/img/pub/moss-image.png",
+        "authors": "MOSI.AI",
+        "venue": "技术报告 · OpenMOSS",
+        "year": "2026",
+        "highlight": "贡献者",
+        "description": "MOSS-Image 是一个面向文字密集、布局复杂图像的开源文生图系统，主干为从零预训练的 5B 单流扩散 Transformer。自然语言描述与结构化 JSON 布局共用同一条文本条件通路，支持中英文长文本渲染、精确的布局控制与最长 4K tokens 的提示词；配套的智能体式提示词增强模块可将简短需求扩展为详细的内容与布局规划。模型在长文本渲染上达到开源模型 SOTA，并在人类偏好评测 RealLayoutArena 的端到端对比中位列第二，仅次于 GPT Image 2。发布以来已获得 <strong>GitHub 约 2.6k★</strong>，<strong>Hugging Face 首月即获约 490 万次下载</strong>。",
+        "tags": [
+          "文生图",
+          "扩散模型",
+          "开源"
+        ],
+        "links": [
+          {
+            "label": "arXiv",
+            "icon": "arxiv",
+            "url": "https://arxiv.org/abs/2610.23374"
+          },
+          {
+            "label": "代码",
+            "icon": "github",
+            "url": "https://github.com/OpenMOSS/MOSS-Image"
+          },
+          {
+            "label": "演示",
+            "icon": "demo",
+            "url": "https://mosi.cn/models/moss-image"
+          },
+          {
+            "label": "模型 Base",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-Base"
+          },
+          {
+            "label": "模型 SFT",
+            "icon": "hf",
+            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-SFT"
+          },
+          {
+            "label": "ComfyUI",
+            "icon": "hf",
+            "url": "https://huggingface.co/Comfy-Org/MOSS-Image"
+          },
+          {
+            "label": "HF 论文",
+            "icon": "hf",
+            "url": "https://huggingface.co/papers/2610.23374"
+          }
+        ]
+      },
+      {
         "title": "MOVA: Towards Scalable and Synchronized Video-Audio Generation",
         "image": "./assets/img/pub/mova.png",
         "authors": "SII-OpenMOSS Team",
         "venue": "技术报告 · OpenMOSS",
         "year": "2026",
         "highlight": "核心贡献者",
-        "description": "MOVA 是一个面向可扩展、同步音视频生成的双塔扩散模型。视频塔采用高噪/低噪两阶段去噪设计，与独立的音频塔通过双向 cross-attention 相耦合，支持 360p 与 720p 下的图生音视频（IT2VA，并涌现出一定的文生音视频 T2VA 能力）。作为最早的开源音视频生成模型之一，它可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。发布以来已获得 <strong>GitHub 约 1k★</strong> 与 <strong>Hugging Face 单月约 10 万次下载</strong>。",
+        "description": "MOVA 是一个面向可扩展、同步音视频生成的双塔扩散模型。视频塔采用高噪/低噪两阶段去噪设计，与独立的音频塔通过双向 cross-attention 相耦合，支持 360p 与 720p 下的图生音视频（IT2VA，并涌现出一定的文生音视频 T2VA 能力）。作为最早的开源音视频生成模型之一，它可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。发布以来已获得 <strong>GitHub 约 1.1k★</strong> 与 <strong>Hugging Face 累计约 95 万次下载</strong>（近一个月约 19 万次）。",
         "tags": [
           "音视频",
           "扩散模型",
@@ -140,57 +191,6 @@
             "label": "HF 论文",
             "icon": "hf",
             "url": "https://huggingface.co/papers/2602.08794"
-          }
-        ]
-      },
-      {
-        "title": "MOSS-Image Technical Report",
-        "image": "./assets/img/pub/moss-image.png",
-        "authors": "MOSI.AI",
-        "venue": "技术报告 · OpenMOSS",
-        "year": "2026",
-        "highlight": "贡献者",
-        "description": "MOSS-Image 是一个面向文字密集、布局复杂图像的开源文生图系统，主干为从零预训练的 5B 单流扩散 Transformer。自然语言描述与结构化 JSON 布局共用同一条文本条件通路，支持中英文长文本渲染、精确的布局控制与最长 4K tokens 的提示词；配套的智能体式提示词增强模块可将简短需求扩展为详细的内容与布局规划。模型在长文本渲染上达到开源模型 SOTA，并在人类偏好评测 RealLayoutArena 的端到端对比中位列第二，仅次于 GPT Image 2。发布以来已获得 <strong>GitHub 约 2.6k★</strong> 与 <strong>Hugging Face 单月约 490 万次下载</strong>。",
-        "tags": [
-          "文生图",
-          "扩散模型",
-          "开源"
-        ],
-        "links": [
-          {
-            "label": "arXiv",
-            "icon": "arxiv",
-            "url": "https://arxiv.org/abs/2610.23374"
-          },
-          {
-            "label": "代码",
-            "icon": "github",
-            "url": "https://github.com/OpenMOSS/MOSS-Image"
-          },
-          {
-            "label": "演示",
-            "icon": "demo",
-            "url": "https://mosi.cn/models/moss-image"
-          },
-          {
-            "label": "模型 Base",
-            "icon": "hf",
-            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-Base"
-          },
-          {
-            "label": "模型 SFT",
-            "icon": "hf",
-            "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Image-SFT"
-          },
-          {
-            "label": "ComfyUI",
-            "icon": "hf",
-            "url": "https://huggingface.co/Comfy-Org/MOSS-Image"
-          },
-          {
-            "label": "HF 论文",
-            "icon": "hf",
-            "url": "https://huggingface.co/papers/2610.23374"
           }
         ]
       }
@@ -314,19 +314,19 @@
             "next": true
           },
           {
-            "text": "MOVA（可扩展音视频同步生成模型）核心贡献者。",
-            "sub": [
-              "双塔架构：视频塔采用高噪/低噪两阶段去噪设计，与独立的音频塔通过双向 cross-attention 耦合，音频与视频同步生成而非后期拼接。",
-              "支持 360p 与 720p 下的图生音视频（IT2VA），并涌现出一定的文生音视频（T2VA）能力。",
-              "作为最早的开源音视频生成模型之一，可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。"
-            ]
-          },
-          {
             "text": "MOSS-Image（支持中英文长文本渲染与布局控制的开源文生图模型）贡献者。",
             "sub": [
               "单流架构：从零预训练的 5B 扩散 Transformer，自然语言描述与结构化 JSON 布局共用同一条文本条件通路。",
               "可渲染中英文长文本并遵循边界框布局，提示词最长 4K tokens；配套的智能体式提示词增强模块可将简短需求扩展为详细的生成规划。",
               "在长文本渲染上达到开源模型 SOTA，在人类偏好评测 RealLayoutArena 的端到端对比中仅次于 GPT Image 2。"
+            ]
+          },
+          {
+            "text": "MOVA（可扩展音视频同步生成模型）核心贡献者。",
+            "sub": [
+              "双塔架构：视频塔采用高噪/低噪两阶段去噪设计，与独立的音频塔通过双向 cross-attention 耦合，音频与视频同步生成而非后期拼接。",
+              "支持 360p 与 720p 下的图生音视频（IT2VA），并涌现出一定的文生音视频（T2VA）能力。",
+              "作为最早的开源音视频生成模型之一，可生成高保真、唇形同步、音画一致的结果，在开源模型中达到 SOTA。"
             ]
           }
         ]
