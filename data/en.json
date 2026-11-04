@@ -93,7 +93,6 @@
         "authors": "MOSI.AI",
         "venue": "Technical Report · OpenMOSS",
         "year": "2026",
-        "highlight": "Contributor",
         "description": "MOSS-Image is an open-source text-to-image system for text-rich, layout-coherent images, built on a 5B single-stream diffusion transformer pretrained from scratch. Natural-language prompts and structured JSON layouts share one text-conditioning pathway, enabling bilingual long-form text rendering, precise layout control and prompts of up to 4K tokens, while an agentic prompt enhancer expands concise requests into detailed content and layout specifications. It achieves open-weight SOTA on long-form text rendering and ranks second end-to-end on the RealLayoutArena human-preference benchmark, behind only GPT Image 2. Since release it has drawn <strong>~2.6k★ on GitHub</strong> and <strong>~4.9M downloads on Hugging Face</strong> within its first month.",
         "tags": [
           "Text-to-Image",
@@ -314,7 +313,7 @@
             "next": true
           },
           {
-            "text": "Contributor to MOSS-Image, an open-source text-to-image model with bilingual long-text rendering and layout control.",
+            "text": "Contributed to MOSS-Image, an open-source text-to-image model with bilingual long-text rendering and layout control.",
             "sub": [
               "Single-stream design: a 5B diffusion transformer pretrained from scratch, with natural-language prompts and structured JSON layouts sharing one text-conditioning pathway.",
               "Renders long Chinese and English text and follows bounding-box layouts, with prompts of up to 4K tokens; an agentic prompt enhancer expands concise requests into detailed generation specifications.",

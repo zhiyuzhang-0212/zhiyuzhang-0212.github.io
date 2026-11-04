@@ -93,7 +93,6 @@
         "authors": "MOSI.AI",
         "venue": "技术报告 · OpenMOSS",
         "year": "2026",
-        "highlight": "贡献者",
         "description": "MOSS-Image 是一个面向文字密集、布局复杂图像的开源文生图系统，主干为从零预训练的 5B 单流扩散 Transformer。自然语言描述与结构化 JSON 布局共用同一条文本条件通路，支持中英文长文本渲染、精确的布局控制与最长 4K tokens 的提示词；配套的智能体式提示词增强模块可将简短需求扩展为详细的内容与布局规划。模型在长文本渲染上达到开源模型 SOTA，并在人类偏好评测 RealLayoutArena 的端到端对比中位列第二，仅次于 GPT Image 2。发布以来已获得 <strong>GitHub 约 2.6k★</strong>，<strong>Hugging Face 首月即获约 490 万次下载</strong>。",
         "tags": [
           "文生图",
@@ -314,7 +313,7 @@
             "next": true
           },
           {
-            "text": "MOSS-Image（支持中英文长文本渲染与布局控制的开源文生图模型）贡献者。",
+            "text": "参与研发 MOSS-Image（支持中英文长文本渲染与布局控制的开源文生图模型）。",
             "sub": [
               "单流架构：从零预训练的 5B 扩散 Transformer，自然语言描述与结构化 JSON 布局共用同一条文本条件通路。",
               "可渲染中英文长文本并遵循边界框布局，提示词最长 4K tokens；配套的智能体式提示词增强模块可将简短需求扩展为详细的生成规划。",
