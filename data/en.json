@@ -313,7 +313,7 @@
             "next": true
           },
           {
-            "text": "Contributed to MOSS-Image, an open-source text-to-image model with bilingual long-text rendering and layout control.",
+            "text": "MOSS-Image, an open-source text-to-image model with bilingual long-text rendering and layout control.",
             "sub": [
               "Single-stream design: a 5B diffusion transformer pretrained from scratch, with natural-language prompts and structured JSON layouts sharing one text-conditioning pathway.",
               "Renders long Chinese and English text and follows bounding-box layouts, with prompts of up to 4K tokens; an agentic prompt enhancer expands concise requests into detailed generation specifications.",
