@@ -50,7 +50,7 @@
   var lang = document.documentElement.getAttribute("lang") || "en";
   if (lang !== "en" && lang !== "zh") lang = "en";
 
-  var VER = "45";
+  var VER = "46";
 
   /* ---------- Load + render ---------- */
   function boot() {

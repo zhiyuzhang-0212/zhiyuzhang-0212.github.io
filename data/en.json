@@ -62,7 +62,7 @@
       },
       {
         "date": "2026.02",
-        "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1.1k★ on GitHub</strong>, <strong>~950k total downloads on Hugging Face</strong>, ~190k in the last month)."
+        "content": "<strong>MOVA</strong> released — China's first open-source video-audio generation model (<strong>~1.1k★ on GitHub</strong>, <strong>~950k total downloads on Hugging Face</strong>, ~100k/month on average)."
       },
       {
         "date": "2026.01",
@@ -145,7 +145,7 @@
         "venue": "Technical Report · OpenMOSS",
         "year": "2026",
         "highlight": "Core contributor",
-        "description": "MOVA is a dual-tower diffusion model for scalable, synchronized video–audio generation. A video tower with two-stage high-/low-noise denoising and a dedicated audio tower are coupled through bidirectional cross-attention, enabling image-to-video-audio (and emergent text-to-video-audio) synthesis at 360p and 720p. As one of the first open-source video–audio generation models, it delivers high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality. Since release it has drawn <strong>~1.1k★ on GitHub</strong> and <strong>~950k total downloads on Hugging Face</strong> (~190k in the last month).",
+        "description": "MOVA is a dual-tower diffusion model for scalable, synchronized video–audio generation. A video tower with two-stage high-/low-noise denoising and a dedicated audio tower are coupled through bidirectional cross-attention, enabling image-to-video-audio (and emergent text-to-video-audio) synthesis at 360p and 720p. As one of the first open-source video–audio generation models, it delivers high-fidelity, lip-synced and audio-visually aligned results at open-source SOTA quality. Since release it has drawn <strong>~1.1k★ on GitHub</strong> and <strong>~950k total downloads on Hugging Face</strong> (~100k/month on average).",
         "tags": [
           "Video-Audio",
           "Diffusion",
