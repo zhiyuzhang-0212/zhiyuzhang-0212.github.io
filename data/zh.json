@@ -66,7 +66,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>——基于连续表征、引入表征对齐（representation alignment）的流式 transformer–diffusion TTS。"
+        "content": "<strong>MELA-TTS</strong> 发表于 <strong>ICASSP 2026</strong>——基于连续表征、引入表征对齐（representation alignment）的流式端到端 LLM–diffusion TTS。"
       },
       {
         "date": "2026.01",
@@ -337,7 +337,7 @@
         "location": "杭州",
         "points": [
           {
-            "text": "MELA-TTS（ICASSP 2026）共同第一作者，基于连续语音特征的 transformer–diffusion 联合建模 TTS 模型。",
+            "text": "MELA-TTS（ICASSP 2026）共同第一作者，基于连续语音特征的端到端 LLM–diffusion 联合建模 TTS 模型。",
             "sub": [
               "直接在连续声学特征上建模，去掉离散语音 tokenizer，规避其带来的信息损失。",
               "以表征对齐目标将语言模型隐层状态与 ASR 编码器表征对齐——稳定端到端优化、加速收敛，并增强文本与语音之间的语义一致性。",

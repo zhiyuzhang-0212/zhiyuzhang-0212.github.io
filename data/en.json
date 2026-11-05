@@ -66,7 +66,7 @@
       },
       {
         "date": "2026.01",
-        "content": "<strong>MELA-TTS</strong> published at <strong>ICASSP 2026</strong> — a streaming transformer–diffusion TTS on continuous representations with representation alignment."
+        "content": "<strong>MELA-TTS</strong> published at <strong>ICASSP 2026</strong> — a streaming end-to-end LLM–diffusion TTS on continuous representations with representation alignment."
       },
       {
         "date": "2026.01",
@@ -337,7 +337,7 @@
         "location": "Hangzhou",
         "points": [
           {
-            "text": "Co-first author of MELA-TTS (ICASSP 2026), a joint transformer–diffusion TTS model built on continuous speech features.",
+            "text": "Co-first author of MELA-TTS (ICASSP 2026), an end-to-end LLM–diffusion TTS model built on continuous speech features.",
             "sub": [
               "Operates directly on continuous acoustic features, removing the discrete speech tokenizer and the information loss it introduces.",
               "A representation-alignment objective ties the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
