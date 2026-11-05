@@ -342,7 +342,7 @@
               "Operates directly on continuous acoustic features, removing the discrete speech tokenizer and the information loss it introduces.",
               "A representation-alignment objective ties the language model's hidden states to ASR encoder features — stabilising end-to-end optimization, accelerating convergence and tightening text–speech semantic consistency.",
               "The alignment also softly decouples semantic modeling from acoustic modeling: the language model captures semantics, while the diffusion module reconstructs acoustic detail.",
-              "Reaches a state-of-the-art character error rate among comparable systems while remaining streaming-capable."
+              "Reaches a state-of-the-art character error rate among comparable systems and supports streaming generation."
             ]
           }
         ]
